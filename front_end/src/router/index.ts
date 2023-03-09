@@ -12,11 +12,35 @@ const router = createRouter({
             children: [
                 {
                     path: '/',
+                    name: 'echarts',
+                    // route level code-splitting
+                    // this generates a separate chunk (About.[hash].js) for this route
+                    // which is lazy-loaded when the route is visited.
+                    component: () => import('../components/Echarts.vue')
+                },
+                {
+                    path: '/bcharts',
+                    name: 'bcharts',
+                    // route level code-splitting
+                    // this generates a separate chunk (About.[hash].js) for this route
+                    // which is lazy-loaded when the route is visited.
+                    component: () => import('../components/Bcharts.vue')
+                },
+                {
+                    path: '/server',
                     name: 'server',
                     // route level code-splitting
                     // this generates a separate chunk (About.[hash].js) for this route
                     // which is lazy-loaded when the route is visited.
                     component: () => import('../components/Server.vue')
+                },
+                {
+                    path: '/table',
+                    name: 'table',
+                    // route level code-splitting
+                    // this generates a separate chunk (About.[hash].js) for this route
+                    // which is lazy-loaded when the route is visited.
+                    component: () => import('../components/Table.vue')
                 },
             ]
         },
