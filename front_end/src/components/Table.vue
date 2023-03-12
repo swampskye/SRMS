@@ -31,7 +31,7 @@
 import {ref} from 'vue'
 import axios from 'axios'
 
-const tableData = ref("")
+const tableData = ref([])
 // let tableData
 axios.get(`base/api/user/`)
     .then(res => {
@@ -40,7 +40,7 @@ axios.get(`base/api/user/`)
       tableData.value = res.data
     })
     .catch(err => {
-
+      console.log('res.data.error',res.data.error)
     })
 
 
