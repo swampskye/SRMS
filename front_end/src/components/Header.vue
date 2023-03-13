@@ -11,7 +11,7 @@
     <el-sub-menu index="2">
       <template #title>Workspace</template>
       <el-menu-item index="/table">item one:table</el-menu-item>
-      <el-menu-item index="">item two:server</el-menu-item>
+      <el-menu-item index="/table">item two:server</el-menu-item>
       <el-menu-item index="2-3">item three</el-menu-item>
       <el-sub-menu index="2-4">
         <template #title>item four</template>
@@ -21,8 +21,8 @@
       </el-sub-menu>
     </el-sub-menu>
 <!--    <el-menu-item index="3" disabled>Info</el-menu-item>-->
-    <el-menu-item index="/server">Info</el-menu-item>
-    <el-menu-item index="/server">Bcharts</el-menu-item>
+    <el-menu-item index="/table">Info</el-menu-item>
+    <el-menu-item index="/profile">Profile</el-menu-item>
   </el-menu>
 </template>
 
@@ -37,4 +37,5 @@ const activeIndex2 = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
+
 </script>

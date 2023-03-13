@@ -1,26 +1,28 @@
 <template>
-  <div style="margin: 20px"/>
-  <el-form
-      :label-position="labelPosition"
-      label-width="100px"
-      :model="formLabelAlign"
-      style="max-width: 460px"
-  >
-    <el-form-item label="Username">
-      <el-input v-model="formLabelAlign.username"/>
-    </el-form-item>
-    <el-form-item label="Password">
-      <el-input type="password" v-model="formLabelAlign.password"/>
-    </el-form-item>
-  </el-form>
-  <!--  <p class="tip" v-show="tip">用户名或密码不正确</p>-->
-  <!--  <el-button :plain="true" v-show="tip">用户名或密码不正确</el-button>-->
-  <p>
-    <router-link to="/signup">don't have accounts? Signup</router-link>
-  </p>
-  <el-button native-type="submit" @click="signin">Signin</el-button>
-  <el-button @click="()=>router.push('/')">Home</el-button>
+  <el-card class="box-card">
+    <div style="margin: 20px"/>
+    <el-form
+        :label-position="labelPosition"
+        label-width="100px"
+        :model="formLabelAlign"
+        style="max-width: 460px"
+
+    >
+      <el-form-item label="Username">
+        <el-input v-model="formLabelAlign.username" placeholder="Input Username"/>
+      </el-form-item>
+      <el-form-item label="Password">
+        <el-input type="password" v-model="formLabelAlign.password" placeholder="Input Password"/>
+      </el-form-item>
+    </el-form>
+    <p>
+      <router-link to="/signup">don't have accounts? Signup</router-link>
+    </p>
+    <el-button native-type="submit" @click="signin" style=" position: relative; left: 178px">Signin</el-button>
+    <!--    <el-button @click="()=>router.push('/')">Home</el-button>-->
+  </el-card>
 </template>
+
 
 <script lang="ts" setup>
 import {h, reactive, ref} from 'vue'
@@ -30,7 +32,7 @@ import {ElMessage} from "element-plus";
 
 
 const router = useRouter()
-const labelPosition = ref('right')
+const labelPosition = ref('left')
 const formLabelAlign = reactive({
   username: '',
   password: '',
@@ -53,7 +55,10 @@ function signin() {
     "password": formLabelAlign.password
   }).then(res => {
     let data = res.data
+    let token = res.data.access
     if (res.status = 200) {
+      localStorage.setItem('token', token)
+      console.log("token:", token)
       router.push("/");
       console.log("登录成功！");
     } else {
@@ -72,9 +77,11 @@ function signin() {
 
 
 <style>
-.tip {
-  margin-left: -440px;
-  margin-top: -13px;
-  color: red;
+
+.box-card {
+  width: 480px;
+  margin: auto;
+  display: flex;
+  /*vertical-align: middle;*/
 }
 </style>

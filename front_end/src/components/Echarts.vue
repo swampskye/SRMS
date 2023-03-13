@@ -1,6 +1,6 @@
 <template>
-<!--  <div id="main" style="width: 1000px;height:1000px;"></div>-->
-  <div id="main" class="main_container" ></div>
+  <div id="main" style="width: 1800px;height:750px;"></div>
+<!--  <div id="main" class="main_container" ></div>-->
 </template>
 
 <script lang="ts" setup>
