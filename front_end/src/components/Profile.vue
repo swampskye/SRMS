@@ -30,7 +30,10 @@
         <!--          <el-input disabled v-model="user.staff_id"/>-->
         <!--        </el-form-item>-->
         <el-form-item label="Staff Id">
-          <el-input v-model="user.staff_id"/>
+          <el-input disabled v-model="user.staff_id"/>
+        </el-form-item>
+        <el-form-item label="Username">
+          <el-input v-model="user.username"/>
         </el-form-item>
         <el-form-item label="Phone">
           <el-input v-model="user.phone"/>
@@ -38,55 +41,10 @@
         <el-form-item label="Email">
           <el-input v-model="user.email"/>
         </el-form-item>
-        <el-form-item label="Email">
-          <el-input v-model="user.is_admin"/>
+        <el-form-item label="Is admin or Not" prop="">
+          <el-input disabled v-model="user.is_admin"/>
         </el-form-item>
-        <!--    <el-form-item label="Activity zone">-->
-        <!--      <el-select v-model="form.region" placeholder="please select your zone">-->
-        <!--        <el-option label="Zone one" value="shanghai"/>-->
-        <!--        <el-option label="Zone two" value="beijing"/>-->
-        <!--      </el-select>-->
-        <!--    </el-form-item>-->
-        <!--    <el-form-item label="Activity time">-->
-        <!--      <el-col :span="11">-->
-        <!--        <el-date-picker-->
-        <!--            v-model="form.date1"-->
-        <!--            type="date"-->
-        <!--            placeholder="Pick a date"-->
-        <!--            style="width: 100%"-->
-        <!--        />-->
-        <!--      </el-col>-->
-        <!--      <el-col :span="2" class="text-center">-->
-        <!--        <span class="text-gray-500">-</span>-->
-        <!--      </el-col>-->
-        <!--      <el-col :span="11">-->
-        <!--        <el-time-picker-->
-        <!--            v-model="form.date2"-->
-        <!--            placeholder="Pick a time"-->
-        <!--            style="width: 100%"-->
-        <!--        />-->
-        <!--      </el-col>-->
-        <!--    </el-form-item>-->
-        <!--    <el-form-item label="Instant delivery">-->
-        <!--      <el-switch v-model="form.delivery"/>-->
-        <!--    </el-form-item>-->
-        <!--    <el-form-item label="Activity type">-->
-        <!--      <el-checkbox-group v-model="form.type">-->
-        <!--        <el-checkbox label="Online activities" name="type"/>-->
-        <!--        <el-checkbox label="Promotion activities" name="type"/>-->
-        <!--        <el-checkbox label="Offline activities" name="type"/>-->
-        <!--        <el-checkbox label="Simple brand exposure" name="type"/>-->
-        <!--      </el-checkbox-group>-->
-        <!--    </el-form-item>-->
-        <!--    <el-form-item label="Resources">-->
-        <!--      <el-radio-group v-model="form.resource">-->
-        <!--        <el-radio label="Sponsor"/>-->
-        <!--        <el-radio label="Venue"/>-->
-        <!--      </el-radio-group>-->
-        <!--    </el-form-item>-->
-        <!--    <el-form-item label="Activity form">-->
-        <!--      <el-input v-model="form.desc" type="textarea"/>-->
-        <!--    </el-form-item>-->
+
         <el-form-item>
           <div style="margin: auto">
             <!--            <el-button type="primary" @click="onSubmit">Create</el-button>-->
@@ -108,7 +66,7 @@
 <script lang="ts" setup>
 import {useRouter} from "vue-router";
 import axios from 'axios'
-import {reactive, ref} from "vue";
+import {ref} from "vue";
 
 const router = useRouter()
 // const http = axios.create()
@@ -116,26 +74,31 @@ const router = useRouter()
 
 let user = ref({
   staff_id: '',
+  username: '',
   phone: '',
   email: '',
   is_admin: '',
   id: '',
 })
-console.log('user_id:', localStorage.getItem('user_id'))
-axios.get('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id') + '/').then(response => {
-// axios.get('base/api/user/f8106b3966bb4782941c7b8a658600cb').then(response=>{
-  console.log("response.data.staff_id:", response.data.staff_id)
+
+// axios.get('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id') + '/').then(response => {
+axios.get('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id')).then(response => {
   user.value = response.data
 })
 
 function update() {
-  axios.put('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id') + '/',
+  axios.put('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id'),
       {
         'phone': user.value.phone,
+        'staff_id': user.value.staff_id,
         'email': user.value.email,
+        'username': user.value.username,
       }).then(response => {
-    console.log('update user')
+    console.log('response.data', response.data)
+    console.log('update user"s username:', user.value.username)
   })
+
+
 }
 
 
@@ -159,10 +122,6 @@ function logout() {
   height: 100px;
 }
 
-.demo-type {
-  display: flex;
-
-}
 
 .demo-type > div {
   flex: 1;
@@ -171,18 +130,6 @@ function logout() {
 
 .demo-type > div:not(:last-child) {
   border-right: 1px solid var(--el-border-color);
-}
-
-.el-row {
-  margin-bottom: 20px;
-}
-
-.el-row:last-child {
-  margin-bottom: 0;
-}
-
-.el-col {
-  border-radius: 4px;
 }
 
 .grid-content {
@@ -213,3 +160,51 @@ function logout() {
 <!--  console.log('submit!')-->
 <!--}-->
 <!--</script>-->
+
+
+<!--    <el-form-item label="Activity zone">-->
+<!--      <el-select v-model="form.region" placeholder="please select your zone">-->
+<!--        <el-option label="Zone one" value="shanghai"/>-->
+<!--        <el-option label="Zone two" value="beijing"/>-->
+<!--      </el-select>-->
+<!--    </el-form-item>-->
+<!--    <el-form-item label="Activity time">-->
+<!--      <el-col :span="11">-->
+<!--        <el-date-picker-->
+<!--            v-model="form.date1"-->
+<!--            type="date"-->
+<!--            placeholder="Pick a date"-->
+<!--            style="width: 100%"-->
+<!--        />-->
+<!--      </el-col>-->
+<!--      <el-col :span="2" class="text-center">-->
+<!--        <span class="text-gray-500">-</span>-->
+<!--      </el-col>-->
+<!--      <el-col :span="11">-->
+<!--        <el-time-picker-->
+<!--            v-model="form.date2"-->
+<!--            placeholder="Pick a time"-->
+<!--            style="width: 100%"-->
+<!--        />-->
+<!--      </el-col>-->
+<!--    </el-form-item>-->
+<!--    <el-form-item label="Instant delivery">-->
+<!--      <el-switch v-model="form.delivery"/>-->
+<!--    </el-form-item>-->
+<!--    <el-form-item label="Activity type">-->
+<!--      <el-checkbox-group v-model="form.type">-->
+<!--        <el-checkbox label="Online activities" name="type"/>-->
+<!--        <el-checkbox label="Promotion activities" name="type"/>-->
+<!--        <el-checkbox label="Offline activities" name="type"/>-->
+<!--        <el-checkbox label="Simple brand exposure" name="type"/>-->
+<!--      </el-checkbox-group>-->
+<!--    </el-form-item>-->
+<!--    <el-form-item label="Resources">-->
+<!--      <el-radio-group v-model="form.resource">-->
+<!--        <el-radio label="Sponsor"/>-->
+<!--        <el-radio label="Venue"/>-->
+<!--      </el-radio-group>-->
+<!--    </el-form-item>-->
+<!--    <el-form-item label="Activity form">-->
+<!--      <el-input v-model="form.desc" type="textarea"/>-->
+<!--    </el-form-item>-->

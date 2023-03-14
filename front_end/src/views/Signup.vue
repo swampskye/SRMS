@@ -11,6 +11,9 @@
       <el-form-item label="staff_id">
         <el-input v-model="formLabelAlign.staff_id" placeholder="Staff Id"/>
       </el-form-item>
+      <el-form-item label="Username">
+        <el-input v-model="formLabelAlign.username" placeholder="Username"/>
+      </el-form-item>
       <el-form-item label="Phone Number">
         <el-input v-model="formLabelAlign.phone" placeholder="Phone Number"/>
       </el-form-item>
@@ -43,6 +46,7 @@ const labelPosition = ref('left')
 const formLabelAlign = reactive({
   // username: '',
   staff_id: '',
+  username:'',
   phone: '',
   email: '',
   password: '',
@@ -51,14 +55,14 @@ const formLabelAlign = reactive({
 
 function stu_create() {
   axios.post('base/api/user/signup/', {
-  // axios.post('http://127.0.0.1:8000/api/user/signup/', {
-    // 'username': formLabelAlign.username,
+    // axios.post('http://127.0.0.1:8000/api/user/signup/', {
+    'username': formLabelAlign.username,
     'staff_id': formLabelAlign.staff_id,
     "phone": formLabelAlign.phone,
     "email": formLabelAlign.email,
     "password": formLabelAlign.password,
     'r_password': formLabelAlign.r_password,
-    "is_admin": false
+    "is_admin": 'student'
   }).then(res => {
     console.log('res.data:', res.data);
     console.log('res.data.code:', res.data.code)
@@ -80,14 +84,14 @@ function stu_create() {
 
 function admin_create() {
   axios.post('base/api/user/signup/', {
-  // axios.post('http://127.0.0.1:8000/api/user/signup/', {
-    // 'username': formLabelAlign.username,
+    // axios.post('http://127.0.0.1:8000/api/user/signup/', {
+    'username': formLabelAlign.username,
     'staff_id': formLabelAlign.staff_id,
     "phone": formLabelAlign.phone,
     "email": formLabelAlign.email,
     "password": formLabelAlign.password,
     'r_password': formLabelAlign.r_password,
-    "is_admin": true
+    "is_admin": 'admin'
   }).then(res => {
     console.log('res.data:', res.data);
     console.log('res.data.code:', res.data.code)
