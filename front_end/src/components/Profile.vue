@@ -8,7 +8,7 @@
     <el-col :span="6">
       <div class="grid-content ep-bg-purple-light" style=" position: relative;"/>
       <!--      <el-avatar style="width: 200px;height: 200px;" size="large">{{ user.username }}</el-avatar>-->
-      <el-avatar class="el-avatar" size="large"><h1>{{ user.username }}</h1></el-avatar>
+      <el-avatar class="el-avatar" size="large"><h1>{{ user.staff_id }}</h1></el-avatar>
     </el-col>
     <el-col :span="6">
       <div class="grid-content ep-bg-purple"/>
@@ -23,15 +23,23 @@
     <el-col :span="6">
       <div class="grid-content ep-bg-purple-light"/>
       <!--  # forms-->
-      <el-form :model="user" label-position="top" label-width="120px">
-        <el-form-item label="Username">
-          <el-input disabled v-model="user.username"/>
+      <el-form :model="user"
+               label-position="top"
+               label-width="120px">
+        <!--        <el-form-item label="Staff Id">-->
+        <!--          <el-input disabled v-model="user.staff_id"/>-->
+        <!--        </el-form-item>-->
+        <el-form-item label="Staff Id">
+          <el-input v-model="user.staff_id"/>
         </el-form-item>
         <el-form-item label="Phone">
-          <el-input disabled v-model="user.phone"/>
+          <el-input v-model="user.phone"/>
         </el-form-item>
         <el-form-item label="Email">
-          <el-input disabled v-model="user.email"/>
+          <el-input v-model="user.email"/>
+        </el-form-item>
+        <el-form-item label="Email">
+          <el-input v-model="user.is_admin"/>
         </el-form-item>
         <!--    <el-form-item label="Activity zone">-->
         <!--      <el-select v-model="form.region" placeholder="please select your zone">-->
@@ -81,8 +89,9 @@
         <!--    </el-form-item>-->
         <el-form-item>
           <div style="margin: auto">
-            <el-button type="primary" @click="onSubmit">Create</el-button>
-<!--            <el-button>Cancel</el-button>-->
+            <!--            <el-button type="primary" @click="onSubmit">Create</el-button>-->
+            <!--            <el-button>Cancel</el-button>-->
+            <el-button type="primary" @click="update()">Update</el-button>
             <el-button type="danger" @click="logout">SignOut</el-button>
           </div>
         </el-form-item>
@@ -101,28 +110,33 @@ import {useRouter} from "vue-router";
 import axios from 'axios'
 import {reactive, ref} from "vue";
 
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
-})
-
 const router = useRouter()
 // const http = axios.create()
 // const username = localStorage.getItem('username')
 
-let user = ref({})
-
-axios.get('http://127.0.0.1:8000/api/user/f8106b3966bb4782941c7b8a658600cb/').then(response => {
+let user = ref({
+  staff_id: '',
+  phone: '',
+  email: '',
+  is_admin: '',
+  id: '',
+})
+console.log('user_id:', localStorage.getItem('user_id'))
+axios.get('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id') + '/').then(response => {
 // axios.get('base/api/user/f8106b3966bb4782941c7b8a658600cb').then(response=>{
-  console.log("response.data.username:", response.data.username)
+  console.log("response.data.staff_id:", response.data.staff_id)
   user.value = response.data
 })
+
+function update() {
+  axios.put('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id') + '/',
+      {
+        'phone': user.value.phone,
+        'email': user.value.email,
+      }).then(response => {
+    console.log('update user')
+  })
+}
 
 
 function logout() {

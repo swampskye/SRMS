@@ -69,6 +69,19 @@ AUTH_USER_MODEL = 'auth_user.AuthUser'
 # custom validator
 AUTHENTICATION_BACKENDS = ['api.auth_user.customize_backends.CustomizeBackend']
 
+# register simplejwt
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+# custom jwt serializer
+SIMPLE_JWT = {
+    "TOKEN_OBTAIN_SERIALIZER": "api.auth_user.serializers.MyTokenObtainPairSerializer"
+}
+
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -2,14 +2,14 @@
   <el-card class="box-card">
     <div style="margin: 20px"/>
     <el-form
-        :label-position="labelPosition"
-        label-width="100px"
+        label-position="top"
+        label-width="300px"
         :model="formLabelAlign"
         style="max-width: 460px"
 
     >
-      <el-form-item label="Username">
-        <el-input v-model="formLabelAlign.username" placeholder="Input Username"/>
+      <el-form-item label="Staff_id">
+        <el-input v-model="formLabelAlign.staff_id" placeholder="Input Staff_id"/>
       </el-form-item>
       <el-form-item label="Password">
         <el-input type="password" v-model="formLabelAlign.password" placeholder="Input Password"/>
@@ -34,7 +34,8 @@ import {ElMessage} from "element-plus";
 const router = useRouter()
 const labelPosition = ref('left')
 const formLabelAlign = reactive({
-  username: '',
+  // username: '',
+  staff_id: '',
   password: '',
 })
 const tip = ref(false);
@@ -51,14 +52,19 @@ const openVn = () => {
 function signin() {
 
   axios.post('base/api/signin/', {
-    "username": formLabelAlign.username,
+    // "username": formLabelAlign.username,
+    "staff_id": formLabelAlign.staff_id,
     "password": formLabelAlign.password
   }).then(res => {
-    let data = res.data
     let token = res.data.access
-    if (res.status = 200) {
+    let user_id = res.data.user_id
+    let is_admin = res.data.is_admin
+    if (res.status === 200) {
       localStorage.setItem('token', token)
-      console.log("token:", token)
+      localStorage.setItem('user_id', user_id)
+      localStorage.setItem('is_admin', is_admin)
+      console.log("save token:", token)
+      console.log('save user_id:', user_id)
       router.push("/");
       console.log("登录成功！");
     } else {
@@ -82,6 +88,5 @@ function signin() {
   width: 480px;
   margin: auto;
   display: flex;
-  /*vertical-align: middle;*/
 }
 </style>
