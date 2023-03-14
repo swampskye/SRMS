@@ -83,9 +83,6 @@ class SignupSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         password = attrs.get('password')
         r_password = attrs.get('r_password')
-        print('attrs.password', password)
-        print('attrs.r_password', r_password)
-        print('attrs:', attrs)
         if password != r_password:
             raise serializers.ValidationError('对不起，两次输入的密码不一致')
         return attrs
