@@ -1,12 +1,25 @@
 <template>
-  <div id="main" style="width: 1800px;height:750px;"></div>
-<!--  <div id="main" class="main_container" ></div>-->
+
+<!--  <div id="main" class="main_container"></div>-->
+    <div id="main" class="border" style="width: 1400px;height:750px;margin: auto"></div>
+
+<!--    <el-row class="row-bg" justify="space-evenly">-->
+<!--    <el-col :span="2">-->
+<!--      <div class="grid-content ep-bg-purple"/>-->
+<!--    </el-col>-->
+<!--    <el-col :span="20">-->
+<!--&lt;!&ndash;      <div class="grid-content ep-bg-purple-light" style=" position: relative;"/>&ndash;&gt;-->
+<!--    <div id="main" class="border" style="width: 1400px;height:750px;margin-left: auto"></div>-->
+<!--    </el-col>-->
+<!--    <el-col :span="2">-->
+<!--      <div class="grid-content ep-bg-purple"/>-->
+<!--    </el-col>-->
+<!--  </el-row>-->
 </template>
 
 <script lang="ts" setup>
 import * as echarts from 'echarts';
 import {onMounted} from "vue";
-import {useRouter} from "vue-router";
 
 type EChartsOption = echarts.EChartsOption;
 
@@ -17,9 +30,21 @@ onMounted(() => {
   var option: EChartsOption;
 
   option = {
+    tooltip: {},
+    visualMap: {     //有下面两种写法
+      show: false,
+      min: 1000,
+      max: 1100000,
+      // splitNumber: 5,
+      // color: ['#d94e5d', '#eac736', '#50a3ba'],     //此种写法是echart2的写法，不推荐使用，但是可以使用，能生效
+      inRange: {     //这种写法才是目前主流的写法
+        color: ['#9ACCFF', '#0091FE', '#0080FF', '#1751B2', '#013998'],
+      },
+    },
+
     series: [
       {
-        name:'Server Rooms',
+        name: 'Server Rooms',
         type: 'treemap',
         data: [
           {
@@ -29,31 +54,26 @@ onMounted(() => {
               {
                 name: 'nodeA1', // First leaf of first tree
                 value: 4,
-                url:"/table"
+                url: "/server_table",
               },
               {
                 name: 'nodeA2', // Second leaf of first tree
-                value: 6
+                value: 6,
               }
             ]
           },
           {
-            name: 'nodeB', // Second tree
-            value: 20,
+            name: 'nodeA', // First tree
+            value: 10,
             children: [
               {
-                name: 'nodeBa', // Son of first tree
-                value: 20,
-                children: [
-                  {
-                    name: 'nodeBa1', // Granson of first tree
-                    value: 20
-                  },
-                  {
-                    name: 'nodeBa2', // Granson of first tree
-                    value: 10
-                  },
-                ]
+                name: 'nodeA1', // First leaf of first tree
+                value: 5,
+                url: "/server_table",
+              },
+              {
+                name: 'nodeA2', // Second leaf of first tree
+                value: 5,
               }
             ]
           }
@@ -63,13 +83,12 @@ onMounted(() => {
   };
 
   option && myChart.setOption(option);
-   myChart.on('dblclick', function (parmas) {
+  myChart.on('dblclick', function (parmas) {
     console.log(parmas.data)
     if (parmas.name == "nodeA1") {
       window.location.href = parmas.data.url;
     }
   })
-
 })
 
 
@@ -79,5 +98,9 @@ onMounted(() => {
 .main_container {
   height: 80%;
   width: 60%;
+  border: 5px solid #181818;
+}
+.border{
+    border: 5px solid #181818;
 }
 </style>

@@ -6,7 +6,6 @@
         label-width="300px"
         :model="formLabelAlign"
         style="max-width: 460px"
-
     >
       <el-form-item label="Staff_id">
         <el-input v-model="formLabelAlign.staff_id" placeholder="Input Staff_id"/>

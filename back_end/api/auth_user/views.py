@@ -28,7 +28,6 @@ class SignupViewSet(ModelViewSet):
             email = request.data['email']
             phone = request.data['phone']
             is_admin = request.data['is_admin']
-            print('signup!!!!!!!!!data', request.data)
         except KeyError:
             return Response({"code": status.HTTP_500_INTERNAL_SERVER_ERROR, "msg": "字段缺失"})
         # 验证用户名、邮箱、手机号是否存在
@@ -41,14 +40,11 @@ class SignupViewSet(ModelViewSet):
         # 注册用户
         if not is_user:
             auth_serializer = SignupSerializer(data=request.data)
-            print('data::::', request.data)
             auth = auth_serializer.is_valid()
-            print('auth_serializer is valid')
             if not auth:
                 return Response({"code": status.HTTP_201_CREATED, "msg": auth_serializer.errors})
             else:
                 auth_serializer.save()
-                print('auth:', auth)
                 return Response({"code": status.HTTP_200_OK, "msg": "注册成功"})
 
     # @action(methods=['POST', 'PUT'], detail=False, url_path='update')
@@ -63,10 +59,8 @@ class SignupViewSet(ModelViewSet):
         username = request.data['username']
 
         auth_serializer = AuthUserInfoSerializer(data=request.data)
-        print('data::::', request.data)
         auth = auth_serializer.is_valid()
         if not auth:
-            print('auth_serializer is not valid')
             return Response({"code": status.HTTP_201_CREATED, "msg": auth_serializer.errors})
         else:
             AuthUser.objects.filter(staff_id=staff_id).update(username=username, email=email, phone=phone)
@@ -75,6 +69,4 @@ class SignupViewSet(ModelViewSet):
             # user.email = email
             # user.phone = phone
             # auth_serializer.save
-            print('auth:', auth)
-            print('auth_serializer is valid')
             return Response({"code": status.HTTP_200_OK, "msg": '修改成功'})

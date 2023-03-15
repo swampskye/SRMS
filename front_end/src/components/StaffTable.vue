@@ -4,25 +4,13 @@
     </el-table-column>
     <el-table-column prop="phone" label="Phone" width="200"></el-table-column>
     <el-table-column prop="email" label="Email" width="200"></el-table-column>
-    <!--    <el-table-column prop="city" label="City" width="120"> </el-table-column>-->
-    <!--    <el-table-column prop="address" label="Address" width="600">-->
-    <!--    </el-table-column>-->
-    <!--    <el-table-column prop="zip" label="Zip" width="120"> </el-table-column>-->
-    <!--    <el-table-column fixed="right" label="Operations" width="200">-->
-    <!--      <template #default="scope">-->
-    <!--        &lt;!&ndash;        <el-button&ndash;&gt;-->
-    <!--        &lt;!&ndash;          @click.prevent="deleteRow(scope.$index, tableData)"&ndash;&gt;-->
-    <!--        &lt;!&ndash;          type="text"&ndash;&gt;-->
-    <!--        &lt;!&ndash;          size="small"&ndash;&gt;-->
-    <!--        &lt;!&ndash;        >&ndash;&gt;-->
-    <!--        <el-button-->
-    <!--            type="text"-->
-    <!--            size="small"-->
-    <!--        >-->
-    <!--          Remove-->
-    <!--        </el-button>-->
-    <!--      </template>-->
-    <!--    </el-table-column>-->
+    <el-table-column label="Status" width="200">
+      <template #default="scope">
+        <div style="display: flex; align-items: center">
+          <span>{{ scope.row.is_admin === 'admin' ? 'Admin‍🎓' : 'Student🏫' }}</span>
+        </div>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -40,7 +28,7 @@ axios.get('base/api/user/')
       tableData.value = res.data
     })
     .catch(err => {
-      console.log('res.data.error',err.data.error)
+      console.log('res.data.error', err.data.error)
     })
 
 </script>

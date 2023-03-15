@@ -29,7 +29,7 @@
         <!--        <el-form-item label="Staff Id">-->
         <!--          <el-input disabled v-model="user.staff_id"/>-->
         <!--        </el-form-item>-->
-        <el-form-item label="Staff Id">
+        <el-form-item label="Staff ID">
           <el-input disabled v-model="user.staff_id"/>
         </el-form-item>
         <el-form-item label="Username">
@@ -41,7 +41,7 @@
         <el-form-item label="Email">
           <el-input v-model="user.email"/>
         </el-form-item>
-        <el-form-item label="Is admin or Not" prop="">
+        <el-form-item label="Admin or Student" prop="">
           <el-input disabled v-model="user.is_admin"/>
         </el-form-item>
 
@@ -66,7 +66,8 @@
 <script lang="ts" setup>
 import {useRouter} from "vue-router";
 import axios from 'axios'
-import {ref} from "vue";
+import {h, ref} from "vue";
+import {ElMessage} from "element-plus";
 
 const router = useRouter()
 // const http = axios.create()
@@ -87,7 +88,7 @@ axios.get('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id')).t
 })
 
 function update() {
-  axios.put('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id'),
+  axios.put('http://127.0.0.1:8000/api/user/' + localStorage.getItem('user_id') + '/',
       {
         'phone': user.value.phone,
         'staff_id': user.value.staff_id,
@@ -96,9 +97,8 @@ function update() {
       }).then(response => {
     console.log('response.data', response.data)
     console.log('update user"s username:', user.value.username)
+    openVn()
   })
-
-
 }
 
 
@@ -106,8 +106,27 @@ function logout() {
   localStorage.clear()
   console.log('token cleared:', localStorage.getItem('token'))
   router.push('/signin')
+  openVnF()
 }
 
+
+const openVn = () => {
+  ElMessage({
+    message: h('p', null, [
+      h('span', null, '系统提示：'),
+      h('i', {style: 'color: green'}, '更新成功'),
+    ]),
+  })
+}
+
+const openVnF = () => {
+  ElMessage({
+    message: h('p', null, [
+      h('span', null, '系统提示：'),
+      h('i', {style: 'color: red'}, '已退出账号'),
+    ]),
+  })
+}
 
 </script>
 
