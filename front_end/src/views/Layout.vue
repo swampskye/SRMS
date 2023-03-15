@@ -43,6 +43,7 @@ import Footer from '../components/Footer.vue'
 /*}*/
 .header_bg {
   /*background-color: red;*/
-        background-color:#545c64
+  /*background-color: #545c64;*/
+
 }
 </style>

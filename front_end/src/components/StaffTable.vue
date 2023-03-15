@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" style="width: 60%" max-height="300">
+  <el-table :data="tableData" style="width: 60%" max-height="750">
     <el-table-column fixed prop="staff_id" label="Staff Id" width="100">
     </el-table-column>
     <el-table-column prop="phone" label="Phone" width="200"></el-table-column>

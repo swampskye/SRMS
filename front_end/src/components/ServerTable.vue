@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="server_table">
     <!--    table-->
     <div style="text-align: center">
       <el-table :data="tableData" width="100%" max-height="600">
@@ -170,7 +170,7 @@ axios.get('base/api/server/')
 </script>
 
 <style>
-.el-table__footer-wrapper, .el-table__header-wrapper {
+.server_table .el-table__footer-wrapper, .el-table__header-wrapper {
   position: relative;
   left: 330px;
 }
