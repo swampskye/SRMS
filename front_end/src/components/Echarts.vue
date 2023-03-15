@@ -1,15 +1,38 @@
 <template>
 
-<!--  <div id="main" class="main_container"></div>-->
-    <div id="main" class="border" style="width: 1400px;height:750px;margin: auto"></div>
+  <!--  <div id="main" class="main_container"></div>-->
+  <!--    <div id="main" class="border" style="width: 1400px;height:750px;margin: auto"></div>-->
 
-<!--    <el-row class="row-bg" justify="space-evenly">-->
+  <!--  full view-->
+  <el-row class="row-bg" justify="space-evenly" >
+    <el-col :span="2">
+      <div class="grid-content ep-bg-purple"/>
+    </el-col>
+    <el-col :span="20">
+      <!--      <div class="grid-content ep-bg-purple-light" style=" position: relative;"/>-->
+      <div id="main" class="border" style="width: 1400px;height:750px;margin: auto"></div>
+    </el-col>
+    <el-col :span="2">
+      <div class="grid-content ep-bg-purple"/>
+    </el-col>
+  </el-row>
+
+  <!--  small views-->
+    <el-row>
+    <el-col :span="24">
+      <div class="grid-content ep-bg-purple-dark" />
+      <div id="pie" style="width: 800px;height:800px;margin: auto"></div>
+    </el-col>
+  </el-row>
+
+<!--  <el-row class="row-bg" justify="space-evenly">-->
 <!--    <el-col :span="2">-->
 <!--      <div class="grid-content ep-bg-purple"/>-->
 <!--    </el-col>-->
 <!--    <el-col :span="20">-->
-<!--&lt;!&ndash;      <div class="grid-content ep-bg-purple-light" style=" position: relative;"/>&ndash;&gt;-->
-<!--    <div id="main" class="border" style="width: 1400px;height:750px;margin-left: auto"></div>-->
+<!--      &lt;!&ndash;      <div class="grid-content ep-bg-purple-light" style=" position: relative;"/>&ndash;&gt;-->
+<!--      &lt;!&ndash;      <div id="main" class="border" style="width: 1400px;height:750px;margin: auto"></div>&ndash;&gt;-->
+<!--      <div id="pie" class="border" style="width: 800px;height:800px;margin: auto"></div>-->
 <!--    </el-col>-->
 <!--    <el-col :span="2">-->
 <!--      <div class="grid-content ep-bg-purple"/>-->
@@ -30,6 +53,7 @@ onMounted(() => {
   var option: EChartsOption;
 
   option = {
+    backgroundColor: '#2c343c',
     tooltip: {},
     visualMap: {     //有下面两种写法
       show: false,
@@ -83,6 +107,77 @@ onMounted(() => {
   };
 
   option && myChart.setOption(option);
+
+
+  var chartDom2 = document.getElementById('pie');
+  var myChart2 = echarts.init(chartDom2);
+  var option2;
+
+  option2 = {
+    backgroundColor: '#2c343c',
+    title: {
+      text: 'Customized Pie',
+      left: 'center',
+      top: 20,
+      textStyle: {
+        color: '#ccc'
+      }
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    visualMap: {
+      show: false,
+      min: 80,
+      max: 600,
+      inRange: {
+        colorLightness: [0, 1]
+      }
+    },
+    series: [
+      {
+        name: 'Access From',
+        type: 'pie',
+        radius: '55%',
+        center: ['50%', '50%'],
+        data: [
+          {value: 335, name: 'Direct'},
+          {value: 310, name: 'Email'},
+          {value: 274, name: 'Union Ads'},
+          {value: 235, name: 'Video Ads'},
+          {value: 400, name: 'Search Engine'}
+        ].sort(function (a, b) {
+          return a.value - b.value;
+        }),
+        roseType: 'radius',
+        label: {
+          color: 'rgba(255, 255, 255, 0.3)'
+        },
+        labelLine: {
+          lineStyle: {
+            color: 'rgba(255, 255, 255, 0.3)'
+          },
+          smooth: 0.2,
+          length: 10,
+          length2: 20
+        },
+        itemStyle: {
+          color: '#c23531',
+          shadowBlur: 200,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        },
+        animationType: 'scale',
+        animationEasing: 'elasticOut',
+        animationDelay: function (idx) {
+          return Math.random() * 200;
+        }
+      }
+    ]
+  };
+
+  option2 && myChart2.setOption(option2);
+
+
   myChart.on('dblclick', function (parmas) {
     console.log(parmas.data)
     if (parmas.name == "nodeA1") {
@@ -100,7 +195,9 @@ onMounted(() => {
   width: 60%;
   border: 5px solid #181818;
 }
-.border{
-    border: 5px solid #181818;
+
+.border {
+  border: 5px solid #181818;
 }
+
 </style>

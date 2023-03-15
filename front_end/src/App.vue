@@ -5,17 +5,14 @@ import Footer from './components/Footer.vue'
 </script>
 
 <template>
-<!--  <div class="common-layout homeWrap">-->
-<!--    <el-container class="main_container">-->
-<!--      <el-header><Header/></el-header>-->
-<!--      <el-main><RouterView /></el-main>-->
-<!--      <el-footer><Footer/></el-footer>-->
-<!--    </el-container>-->
-<!--  </div>-->
-  <RouterView />
+  <RouterView class="all" />
 </template>
 
-
+<style>
+.all{
+  font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+</style>
 <style scoped>
 
 

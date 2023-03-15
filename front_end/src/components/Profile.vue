@@ -1,5 +1,5 @@
 <template>
-
+<div class="profile">
   <!--  row 1-->
   <el-row class="row-bg" justify="space-evenly">
     <el-col :span="6">
@@ -25,11 +25,13 @@
       <!--  # forms-->
       <el-form :model="user"
                label-position="top"
-               label-width="120px">
+               label-width="120px"
+
+      >
         <!--        <el-form-item label="Staff Id">-->
         <!--          <el-input disabled v-model="user.staff_id"/>-->
         <!--        </el-form-item>-->
-        <el-form-item label="Staff ID">
+        <el-form-item label="Staff ID" >
           <el-input disabled v-model="user.staff_id"/>
         </el-form-item>
         <el-form-item label="Username">
@@ -59,7 +61,7 @@
       <div class="grid-content ep-bg-purple"/>
     </el-col>
   </el-row>
-
+</div>
 
 </template>
 
@@ -157,8 +159,14 @@ const openVnF = () => {
   min-height: 36px;
   /*left: 100px;*/
 }
-</style>
 
+</style>
+<style>
+.profile .el-form--default.el-form--label-top .el-form-item .el-form-item__label{
+  font-size: 18px;
+  color: white;
+}
+</style>
 
 <!--<script lang="ts" setup>-->
 <!--import { reactive } from 'vue'-->

@@ -1,13 +1,13 @@
 <template>
   <div class="common-layout homeWrap">
-    <el-container class="main_container">
-      <el-header>
+    <el-container class="main_container main">
+      <el-header class="header_bg">
         <Header/>
       </el-header>
-      <el-main>
+      <el-main class="main">
         <router-view/>
       </el-main>
-      <el-footer>
+      <el-footer class="footer">
         <Footer/>
       </el-footer>
     </el-container>
@@ -29,7 +29,20 @@ import Footer from '../components/Footer.vue'
   width: 100%;
   height: 100%;
 }
+
 .main_container {
   height: 100%;
+}
+
+.main {
+  background: #2c343c;
+}
+
+/*.footer{*/
+/*  background-color: red;*/
+/*}*/
+.header_bg {
+  /*background-color: red;*/
+        background-color:#545c64
 }
 </style>

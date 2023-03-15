@@ -1,11 +1,15 @@
 <template>
+
+
   <el-menu
       router
       :default-active="activeIndex"
-      class="el-menu-demo"
+      class="el-menu-demo bg"
       mode="horizontal"
       @select="handleSelect"
+      background-color="#545c64"
   >
+<!--    灰色-->
     <el-menu-item index="/">Echarts</el-menu-item>
 <!--    <el-sub-menu index="2">-->
     <el-sub-menu index="2">
@@ -24,6 +28,7 @@
     <el-menu-item index="/fix">Fix</el-menu-item>
     <el-menu-item index="/profile">Profile</el-menu-item>
   </el-menu>
+
 </template>
 
 <script lang="ts" setup>
@@ -39,3 +44,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
 }
 
 </script>
+
+<style scoped>
+.bg{
+
+}
+</style>
