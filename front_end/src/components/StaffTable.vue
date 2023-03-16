@@ -1,9 +1,9 @@
 <template>
-  <el-table :data="tableData" style="width: 60%" max-height="750">
-    <el-table-column fixed prop="staff_id" label="Staff Id" width="100">
+  <el-table :data="tableData" style="width: 60%" max-height="400">
+    <el-table-column fixed prop="staff_id" label="Staff Id" width="200">
     </el-table-column>
     <el-table-column prop="phone" label="Phone" width="200"></el-table-column>
-    <el-table-column prop="email" label="Email" width="200"></el-table-column>
+    <el-table-column prop="email" label="Email" width="300"></el-table-column>
     <el-table-column label="Status" width="200">
       <template #default="scope">
         <div style="display: flex; align-items: center">
