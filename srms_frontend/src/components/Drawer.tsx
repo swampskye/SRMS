@@ -4,7 +4,10 @@ import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from
 
 const { Option } = Select;
 
-const App: React.FC = () => {
+const App: React.FC = (props) => {
+
+
+  console.log(props)
 
   // const [text, setText] = useState(Props.text)
 

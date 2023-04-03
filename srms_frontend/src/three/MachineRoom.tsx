@@ -139,10 +139,9 @@
 // }
 
 
-// import React from 'react'
 
-// export default function MachineRoom() {
-//     return (
-//         <div>MachineRoom</div>
-//     )
-// }
+export default function MachineRoom() {
+    return (
+        <div>MachineRoom</div>
+    )
+}
