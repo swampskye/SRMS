@@ -37,7 +37,9 @@ export default class MachineRoom {
 
     constructor(canvas: HTMLCanvasElement, modelPath: string = './models/') {
         this.renderer = new WebGLRenderer({ canvas })
+        this.renderer.setSize(1920, 815)
         this.scene = new Scene()
+        this.scene.background = new Color("white")
         this.camera = new PerspectiveCamera(
             45, canvas.width / canvas.height, 0.1, 1000
         )

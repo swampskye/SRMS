@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Button } from 'antd';
+import { Space, Table, Tag, Button, Col, Row, Card } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import axios from 'axios'
 import Drawer from '../../components/Drawer'
@@ -102,11 +102,11 @@ function App() {
     }, []);
 
     return (
-        <div>
-            <Table rowKey="id" columns={columns} dataSource={data} />
+        <Col span={20} offset={2}>
+            <h1 style={{ textAlign: "center" }}>Server Table</h1>
+            <Table rowKey="id" columns={columns} dataSource={data} scroll={{ y: 600 }} />
             <Drawer id={"add new server"}></Drawer>
-        </div>
-
+        </Col >
     )
 }
 

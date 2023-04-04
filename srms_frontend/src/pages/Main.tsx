@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Row } from 'antd';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd';
 import {
-    DesktopOutlined,
-    FileOutlined,
-    PieChartOutlined,
-    TeamOutlined,
+    CloudServerOutlined,
+    TableOutlined,
+    ToolOutlined,
     UserOutlined,
 } from '@ant-design/icons';
 const { Header, Content, Footer } = Layout;
@@ -30,9 +29,9 @@ function getItem(
 
 
 const items: MenuItem[] = [
-    getItem(<Link to="/show">Show</Link>, 'show', <PieChartOutlined />),
-    getItem(<Link to="/table">Table</Link>, 'table', <DesktopOutlined />),
-    getItem(<Link to="/fix">Fix</Link>, 'fix', <FileOutlined />),
+    getItem(<Link to="/show">Show</Link>, 'show', <CloudServerOutlined />),
+    getItem(<Link to="/table">Table</Link>, 'table', <TableOutlined />),
+    getItem(<Link to="/fix">Fix</Link>, 'fix', <ToolOutlined />),
     getItem(<Link to="/profile">Profile</Link>, 'profile', <UserOutlined />),
     // getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
 ];
@@ -40,6 +39,14 @@ const items: MenuItem[] = [
 
 
 const Main: React.FC = () => {
+
+    const contentStyle: React.CSSProperties = {
+        textAlign: 'center',
+        minHeight: 120,
+        lineHeight: '120px',
+        color: '#fff',
+        backgroundColor: '#108ee9',
+    };
 
     const {
         token: { colorBgContainer },
@@ -57,8 +64,10 @@ const Main: React.FC = () => {
 
     return (
         <Layout className="layout">
-            <Header>
-                <div className="logo" />
+            <Header style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}>
+                <div className="logo">
+                    {/* <img src="../logo.png" alt="" style={{ margin: "auto" }} /> */}
+                </div>
                 <Menu
                     onClick={onClick}
                     theme="dark"
@@ -67,18 +76,13 @@ const Main: React.FC = () => {
                     items={items}
                 />
             </Header>
-            <Content style={{ padding: '0 50px' }}>
-                {/* <Breadcrumb style={{ margin: '16px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>List</Breadcrumb.Item>
-                    <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb> */}
-                <div className="site-layout-content" style={{ background: colorBgContainer }}>
-                    <Outlet />
-                </div>
+            <Content>
+                {/* <div style={{ background: colorBgContainer, width: "100%" }}> */}
+                <Outlet />
+                {/* </div> */}
             </Content>
-            <Footer style={{ textAlign: 'center' }}>SwampSkye ©2023 Created by Zetian Zhao</Footer>
-        </Layout>
+            <Footer style={{ textAlign: 'center', background: "gray", position: 'fixed', bottom: 0, zIndex: 1, width: '100%' }}>SRMS ©2023 Created by Zetian Zhao</Footer>
+        </Layout >
     );
 };
 

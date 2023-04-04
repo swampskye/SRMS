@@ -1,31 +1,93 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Col, Row, Card } from 'antd';
+import { IdcardOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 const Signup: React.FC = () => {
+
+  const navigator = useNavigate()
+
+
+  const submit = (form: any) => {
+    axios.post('base/api/user/signup/', {
+      // axios.post('http://127.0.0.1:8000/api/user/signup/', {
+      'username': form.username,
+      'staff_id': form.staff_id,
+      "phone": form.phone,
+      "email": form.email,
+      "password": form.password,
+      'r_password': form.r_password,
+      "is_admin": 'student'
+    }).then(res => {
+      console.log('res.data:', res.data);
+      console.log('res.data.code:', res.data.code)
+      if (res.data.code === 200) {
+        //跳转到登录
+        navigator('/signin')
+        console.log("stu注册成功")
+      }
+      if (res.data.code === 500) {
+        console.log('status: 500')
+      }
+      if (res.data.code === 201) {
+        console.log('status: 201')
+      }
+    }).catch(err => {
+      console.log(err.message)
+    });
+
+  }
+
+
+
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+    submit(values)
   };
 
   return (
-    <Row style={{ marginTop: 200 }}>
-      <Col span={9}></Col>
-      <Col span={6}>
-        <Card title="Sign Up" bordered={true} style={{ width: 400 }}>
+    <Row style={{ marginTop: "5%" }}>
+      <Col span={6} offset={9}>
+        <Card title="Sign Up" bordered={true} style={{ margin: "auto" }}>
           <Form
             name="normal_login"
             className="login-form"
+            layout='vertical'
             initialValues={{ remember: true }}
             onFinish={onFinish}
           >
             <Form.Item
+              name="staff_id"
+              label="Staff ID"
+              rules={[{ required: true, message: 'Please input your Staff ID!' }]}
+            >
+              <Input prefix={<IdcardOutlined />} placeholder="Staff ID" />
+            </Form.Item>
+            <Form.Item
               name="username"
+              label="Username"
               rules={[{ required: true, message: 'Please input your Username!' }]}
             >
               <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
             </Form.Item>
             <Form.Item
+              name="phone"
+              label="Phone"
+              rules={[{ required: true, message: 'Please input your Phone Number!' }]}
+            >
+              <Input prefix={<PhoneOutlined />} placeholder="Phone Number" />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[{ required: true, message: 'Please input your Email!' }]}
+            >
+              <Input prefix={<MailOutlined />} placeholder="Email" />
+            </Form.Item>
+            <Form.Item
               name="password"
+              label="Password"
               rules={[{ required: true, message: 'Please input your Password!' }]}
             >
               <Input
@@ -34,7 +96,19 @@ const Signup: React.FC = () => {
                 placeholder="Password"
               />
             </Form.Item>
-            <Form.Item>
+            <Form.Item
+              name="r_password"
+              label="Confirm Password"
+              rules={[{ required: true, message: 'Please confirm your Password!' }]}
+            >
+              <Input prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder="Confirm Password" />
+            </Form.Item>
+
+
+
+            {/* <Form.Item>
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
@@ -42,12 +116,12 @@ const Signup: React.FC = () => {
               <a className="login-form-forgot" href="">
                 Forgot password
               </a>
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item>
               <Button type="primary" htmlType="submit" className="login-form-button">
-                Signin
+                Signup
               </Button>
-              Or <a href="">Signup now!</a>
+              OR <Link to="/signin">Signin now!</Link>
             </Form.Item>
           </Form>
         </Card >

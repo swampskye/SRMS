@@ -2,7 +2,9 @@ import '../../App.css'
 import MachineRoom from "../../three/MachineRoom";
 import { getCabinetByName } from "../../three/Cabinet";
 //机房对象
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+// import Popover from '../../components/Popover'
+import { Space, Popover, Button, Card } from 'antd'
 
 let room: any;
 
@@ -35,8 +37,17 @@ function App() {
         room.loadGLTF('machineRoom.gltf')
         room.animate()
         //当鼠标划入机柜，显示信息面板
-        room.onMouseOverCabinet = () => {
+        room.onMouseOverCabinet = ({ name }: { name: string }) => {
             setVisible('block')
+            getCabinetByName(name).then((res) => {
+                let re = JSON.parse(res)
+                let temperature: number = re.temperaturn
+                let capacity: number = re.capacity
+                let count: number = re.count
+                setState((prevState) => {
+                    return Object.assign({}, prevState, { curCabinet: { name, temperature, capacity, count } })
+                })
+            });
         }
         //当鼠标在机柜上移动，让信息面板随鼠标移动
         // room.onMouseMoveCabinet = (left: number, top: number) => {
@@ -45,7 +56,6 @@ function App() {
             setState((prevState) => {
                 return Object.assign({}, prevState, { planePos: { left, top } })
             })
-            // setPosition({ left, top })
         }
         //当鼠标划出机柜，隐藏信息面板
         room.onMouseOutCabinet = () => {
@@ -59,7 +69,7 @@ function App() {
     //     room.selectCabinet(clientX, clientY);
     // }
     function mouseMove({ clientX, clientY }: { clientX: number, clientY: number }) {
-        room.selectCabinet(clientX - 50, clientY)
+        room.selectCabinet(clientX, clientY)
     }
     return (
         // style={{ height: "300" }}
