@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Breadcrumb, Layout, Menu, theme, Row } from 'antd';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd';
+
 import {
     CloudServerOutlined,
     TableOutlined,
@@ -64,24 +65,24 @@ const Main: React.FC = () => {
 
     return (
         <Layout className="layout">
-            <Header style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}>
-                <div className="logo">
-                    {/* <img src="../logo.png" alt="" style={{ margin: "auto" }} /> */}
-                </div>
-                <Menu
-                    onClick={onClick}
-                    theme="dark"
-                    mode="horizontal"
-                    defaultSelectedKeys={[page]}
-                    items={items}
-                />
-            </Header>
-            <Content>
+            {/* <Header style={{ position: 'sticky', backgroundColor: "#001529", top: 0, zIndex: 1, width: '100%', padding: "0" }}> */}
+            {/* <div className="logo">
+                <img src="../logo.png" alt="" style={{ margin: "auto" }} />
+            </div> */}
+            <Menu
+                onClick={onClick}
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={[page]}
+                items={items}
+            />
+            {/* </Header> */}
+            <Content style={{ backgroundColor: "white", height: "70%" }}>
                 {/* <div style={{ background: colorBgContainer, width: "100%" }}> */}
                 <Outlet />
                 {/* </div> */}
             </Content>
-            <Footer style={{ textAlign: 'center', background: "gray", position: 'fixed', bottom: 0, zIndex: 1, width: '100%' }}>SRMS ©2023 Created by Zetian Zhao</Footer>
+            <Footer style={{ textAlign: 'center', position: 'fixed', bottom: 0, height: "5%", width: '100%' }}>SRMS ©2023 Created by Zetian Zhao</Footer>
         </Layout >
     );
 };

@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
-import {PlusOutlined} from '@ant-design/icons';
-import {Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space} from 'antd';
+import React, { useState, useEffect } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
+import axios from 'axios';
 
-const {Option} = Select;
+
+const { Option } = Select;
 
 interface MyProps {
     id: string,
@@ -12,10 +14,7 @@ interface MyProps {
 const App: React.FC<MyProps> = (props) => {
 
 
-    // console.log(props.id)
-    // console.log(props.text)
 
-    // const [text, setText] = useState(Props.text)
 
     const [open, setOpen] = useState(false);
 
@@ -27,9 +26,53 @@ const App: React.FC<MyProps> = (props) => {
         setOpen(false);
     };
 
+
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/user/' + props.id + '/')
+            .then(response => {
+                setUser(response.data);
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, []);
+
+
+
+
+    const onFinish = (values: any) => {
+        axios.put('http://127.0.0.1:8000/api/user/' + props.id + '/', {
+            'phone': values.phone,
+            'staff_id': values.staff_id,
+            'email': values.email,
+            'username': values.username,
+        })
+            .then(response => {
+                setUser(response.data);
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+
+
+    const [user, setUser] = useState({
+        staff_id: '',
+        phone: '',
+        email: '',
+        is_admin: '',
+        username: ''
+    })
+
+
+
+
     return (
         <>
-            <Button type="primary" size={"small"} onClick={showDrawer}>
+            <Button size={"small"} onClick={showDrawer}>
                 {props.text}
             </Button>
             <Drawer
@@ -37,74 +80,67 @@ const App: React.FC<MyProps> = (props) => {
                 width={720}
                 onClose={onClose}
                 open={open}
-                bodyStyle={{paddingBottom: 80}}
-                extra={
-                    <Space>
-                        <Button onClick={onClose}>Cancel</Button>
-                        <Button onClick={onClose} type="primary">
-                            Submit
-                        </Button>
-                    </Space>
-                }
+                bodyStyle={{ paddingBottom: 80 }}
+            // extra={
+            //     <Space>
+            //         <Button onClick={onClose}>Cancel</Button>
+            //         <Button onClick={onFinish} type="primary">
+            //             Submit
+            //         </Button>
+            //     </Space>
+            // }
             >
-                <Form layout="vertical" hideRequiredMark>
+                <Form
+                    layout="vertical"
+                    onFinish={onFinish}
+                    initialValues={user}
+                >
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                name="name"
-                                label="Name"
-                                rules={[{required: true, message: 'Please enter user name'}]}
+                                name="email"
+                                label="Email"
+                                rules={[{ required: true, message: 'Please enter your Email' }]}
                             >
-                                <Input placeholder="Please enter user name"/>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name="url"
-                                label="Url"
-                                rules={[{required: true, message: 'Please enter url'}]}
-                            >
-                                <Input
-                                    style={{width: '100%'}}
-                                    addonBefore="http://"
-                                    addonAfter=".com"
-                                    placeholder="Please enter url"
-                                />
+                                <Input placeholder="Please enter your Email" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                name="owner"
-                                label="Owner"
-                                rules={[{required: true, message: 'Please select an owner'}]}
+                                name="username"
+                                label="Username"
+                                rules={[{ required: true, message: 'Please enter your Username' }]}
                             >
-                                <Select placeholder="Please select an owner">
-                                    <Option value="xiao">Xiaoxiao Fu</Option>
-                                    <Option value="mao">Maomao Zhou</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name="type"
-                                label="Type"
-                                rules={[{required: true, message: 'Please choose the type'}]}
-                            >
-                                <Select placeholder="Please choose the type">
-                                    <Option value="private">Private</Option>
-                                    <Option value="public">Public</Option>
-                                </Select>
+                                <Input placeholder="Please enter your Username" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item
+                                name="phone"
+                                label="Phone Number"
+                                rules={[{ required: true, message: 'Please enter your Phone Number' }]}
+                            >
+                                <Input placeholder="Please enter your Phone Number" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Update
+                    </Button>
+
+
+
+                    {/* <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
                                 name="approver"
                                 label="Approver"
-                                rules={[{required: true, message: 'Please choose the approver'}]}
+                                rules={[{ required: true, message: 'Please choose the approver' }]}
                             >
                                 <Select placeholder="Please choose the approver">
                                     <Option value="jack">Jack Ma</Option>
@@ -116,10 +152,10 @@ const App: React.FC<MyProps> = (props) => {
                             <Form.Item
                                 name="dateTime"
                                 label="DateTime"
-                                rules={[{required: true, message: 'Please choose the dateTime'}]}
+                                rules={[{ required: true, message: 'Please choose the dateTime' }]}
                             >
                                 <DatePicker.RangePicker
-                                    style={{width: '100%'}}
+                                    style={{ width: '100%' }}
                                     getPopupContainer={(trigger) => trigger.parentElement!}
                                 />
                             </Form.Item>
@@ -137,10 +173,10 @@ const App: React.FC<MyProps> = (props) => {
                                     },
                                 ]}
                             >
-                                <Input.TextArea rows={4} placeholder="please enter url description"/>
+                                <Input.TextArea rows={4} placeholder="please enter url description" />
                             </Form.Item>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </Form>
             </Drawer>
         </>

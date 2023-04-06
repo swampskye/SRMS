@@ -104,7 +104,7 @@ function App() {
     return (
         <Col span={20} offset={2}>
             <h1 style={{ textAlign: "center" }}>Server Table</h1>
-            <Table rowKey="id" columns={columns} dataSource={data} scroll={{ y: 600 }} />
+            <Table rowKey="id" columns={columns} dataSource={data} scroll={{ y: 450 }} />
             <ServerDrawer id={"add new server"} text={"Edit"}></ServerDrawer>
         </Col >
     )

@@ -1,9 +1,21 @@
-import {Avatar, Badge, Button, Col, Descriptions, Row, Space} from "antd";
-import React, {useEffect, useState} from "react";
+import { Avatar, Badge, Button, Col, Descriptions, Row, Space } from "antd";
+import React, { useEffect, useState } from "react";
 import UserDrawer from "../../components/UserDrawer";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
+
+
+
+
+    const navigator = useNavigate()
+    const logout = () => {
+        localStorage.clear()
+        navigator('/signin')
+    }
+
+
 
     const UsernameList = ['Skye', 'Lucy', 'Tom', 'Edward'];
     const ColorList = ['#ffbf00', '#7265e6', '#ffbf00', '#00a2ae'];
@@ -24,7 +36,14 @@ export default function Profile() {
     //     setGap(index < GapList.length - 1 ? GapList[index + 1] : GapList[0]);
     // };
 
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState({
+        staff_id: '',
+        phone: '',
+        email: '',
+        is_admin: '',
+        username: ''
+    })
+
     const token: any = localStorage.getItem("token")
     const user_id: any = localStorage.getItem("user_id")
     const is_admin: any = localStorage.getItem("is_admin")
@@ -44,45 +63,32 @@ export default function Profile() {
 
     return (
         <div>
-            <Row style={{marginTop: "150px"}}>
-                <Col span={8} style={{backgroundColor: ""}}>
-                    <Space align="center" direction={"vertical"} style={{marginLeft: "25%"}}>
-                        <Avatar style={{backgroundColor: color, verticalAlign: 'middle',}}
-                                size={{xs: 24, sm: 80, md: 150, lg: 200, xl: 300, xxl: 300}}
-                                gap={gap}>
-                            {username}
+            <Row style={{ marginTop: "150px" }}>
+                <Col span={8} style={{ backgroundColor: "" }}>
+                    <Space align="center" direction={"vertical"} style={{ marginLeft: "25%" }}>
+                        <Avatar style={{ backgroundColor: color, verticalAlign: 'middle', }}
+                            size={{ xs: 24, sm: 80, md: 150, lg: 200, xl: 300, xxl: 300 }}
+                            gap={gap}>
+                            {user.username}
                         </Avatar>
-                        <UserDrawer id={user_id} text={"Edit Profile"}></UserDrawer>
+                        <div>
+                            <Space>
+                                <UserDrawer id={user_id} text={"Edit Profile"}></UserDrawer>
+                                <Button size="small" onClick={logout} danger>Exit Account</Button>
+                            </Space>
+                        </div>
                     </Space>
                 </Col>
                 <Col span={14}>
                     <Descriptions title="User Info" bordered>
-                        <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
-                        <Descriptions.Item label="Billing Mode">Prepaid</Descriptions.Item>
-                        <Descriptions.Item label="Automatic Renewal">YES</Descriptions.Item>
-                        <Descriptions.Item label="Order time">2018-04-24 18:00:00</Descriptions.Item>
-                        <Descriptions.Item label="Usage Time" span={2}>
-                            2019-04-24 18:00:00
+                        <Descriptions.Item label="Staff ID" span={2}>{user.staff_id}</Descriptions.Item>
+                        <Descriptions.Item label="Username">{user.username}</Descriptions.Item>
+                        <Descriptions.Item label="Phone" span={2}>
+                            {user.phone}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Status" span={3}>
-                            <Badge status="processing" text="Running"/>
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Negotiated Amount">$80.00</Descriptions.Item>
-                        <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
-                        <Descriptions.Item label="Official Receipts">$60.00</Descriptions.Item>
-                        <Descriptions.Item label="Config Info">
-                            Data disk type: MongoDB
-                            <br/>
-                            Database version: 3.4
-                            <br/>
-                            Package: dds.mongo.mid
-                            <br/>
-                            Storage space: 10 GB
-                            <br/>
-                            Replication factor: 3
-                            <br/>
-                            Region: East China 1
-                            <br/>
+                        <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
+                        <Descriptions.Item label="Admin or Student" span={3}>
+                            {user.is_admin == 'admin' ? <Badge status="error" text="Admin" /> : <Badge status="success" text="Studnet" />}
                         </Descriptions.Item>
                     </Descriptions>
                 </Col>
