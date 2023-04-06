@@ -16,6 +16,11 @@ class SignupViewSet(ModelViewSet):
     queryset = AuthUser.objects.all()
     serializer_class = SignupSerializer
 
+    # @action(methods=['GET'], detail=False, url_path='user_detail')
+    # def user_detail(self, request, *args, **kwargs):
+    #     detail = AuthUser.objects.get(staff_id=request.data['staff_id'])
+    #     return detail
+
     @action(methods=['POST'], detail=False, url_path='signup')
     def signup(self, request, *args, **kwargs):
         """

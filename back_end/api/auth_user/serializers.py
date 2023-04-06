@@ -97,7 +97,7 @@ class MyTokenObtainPairSerializer(TokenObtainSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-        data["refresh!!!"] = str(refresh)
+        data["refresh"] = str(refresh)
         data["access"] = str(refresh.access_token)
         data['user_id'] = str(self.user.id)
         data['is_admin'] = str(self.user.is_admin)

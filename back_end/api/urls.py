@@ -3,7 +3,6 @@ from rest_framework_simplejwt.views import token_obtain_pair, token_refresh
 from django.urls import path
 # from api.auth_user.views import AuthUserViewSet
 from api.auth_user.views import SignupViewSet
-
 from api.server.views import ServerViewSet
 
 router = SimpleRouter()

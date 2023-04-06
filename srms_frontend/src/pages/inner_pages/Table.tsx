@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Space, Table, Tag, Button, Col, Row, Card } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import axios from 'axios'
-import Drawer from '../../components/Drawer'
+import ServerDrawer from '../../components/ServerDrawer'
 // import { useNavigate } from 'react-router-dom';
 interface DataType {
     key: string;
@@ -51,7 +51,7 @@ const columns: ColumnsType<DataType> = [
         dataIndex: 'id',
         key: 'operations',
         // render: () => <Button type="primary">Detail</Button>
-        render: (id: string) => <Drawer id={id}></Drawer>
+        render: (id: string) => <ServerDrawer id={id} text={"Edit Detail"}></ServerDrawer>
         // dataIndex: 'address',
     },
     // {
@@ -105,7 +105,7 @@ function App() {
         <Col span={20} offset={2}>
             <h1 style={{ textAlign: "center" }}>Server Table</h1>
             <Table rowKey="id" columns={columns} dataSource={data} scroll={{ y: 600 }} />
-            <Drawer id={"add new server"}></Drawer>
+            <ServerDrawer id={"add new server"} text={"Edit"}></ServerDrawer>
         </Col >
     )
 }
