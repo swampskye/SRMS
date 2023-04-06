@@ -1,10 +1,8 @@
 import '../../App.css'
 import MachineRoom from "../../three/MachineRoom";
 import { getCabinetByName } from "../../three/Cabinet";
-//机房对象
 import { useEffect, useRef, useState } from 'react';
-// import Popover from '../../components/Popover'
-import { Space, Popover, Button, Card } from 'antd'
+import { Space, Button, Card } from 'antd'
 
 let room: any;
 
