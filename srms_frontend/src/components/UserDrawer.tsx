@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
 import axios from 'axios';
+import cookie from 'react-cookies'
 
 
 const { Option } = Select;
 
 interface MyProps {
-    id: string,
+    // id: string,
     text?: string
 }
 
@@ -27,44 +28,60 @@ const App: React.FC<MyProps> = (props) => {
     };
 
 
+    // useEffect(() => {
+    // axios.get('http://127.0.0.1:8000/api/user/' + props.id + '/')
+    // axios.get('http://127.0.0.1:8080/user/info')
+
+    //     .then(response => {
+    //         setUser(response.data);
+    //         console.log(response.data)
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
+    // }, []);
+
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/user/' + props.id + '/')
-            .then(response => {
-                setUser(response.data);
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        axios.get('http://127.0.0.1:8080/user/info', {
+            params: { "token": cookie.load("token") }
+        }).then(res => {
+            // console.log("获取userinfo", res.data)
+            setUser(res.data.data)
+        }).catch(err => {
+            console.log('error:', err.message);
+        });
     }, []);
 
 
 
 
     const onFinish = (values: any) => {
-        axios.put('http://127.0.0.1:8000/api/user/' + props.id + '/', {
-            'phone': values.phone,
-            'staff_id': values.staff_id,
-            'email': values.email,
-            'username': values.username,
-        })
-            .then(response => {
-                setUser(response.data);
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        // axios.put('http://127.0.0.1:8000/api/user/' + props.id + '/', {
+        //     'phone': values.phone,
+        //     'staff_id': values.staff_id,
+        //     'email': values.email,
+        //     'username': values.username,
+        // })
+        //     .then(response => {
+        //         setUser(response.data);
+        //         console.log(response.data)
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     };
 
 
 
     const [user, setUser] = useState({
-        staff_id: '',
+        id: '',
         phone: '',
         email: '',
-        is_admin: '',
-        username: ''
+        is_admin: null,
+        is_active: null,
+        username: '',
+        img: '',
+        short_intro: ''
     })
 
 
@@ -76,36 +93,17 @@ const App: React.FC<MyProps> = (props) => {
                 {props.text}
             </Button>
             <Drawer
-                title="Create a new account"
+                title="Update your profile"
                 width={720}
                 onClose={onClose}
                 open={open}
                 bodyStyle={{ paddingBottom: 80 }}
-            // extra={
-            //     <Space>
-            //         <Button onClick={onClose}>Cancel</Button>
-            //         <Button onClick={onFinish} type="primary">
-            //             Submit
-            //         </Button>
-            //     </Space>
-            // }
             >
                 <Form
                     layout="vertical"
                     onFinish={onFinish}
                     initialValues={user}
                 >
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item
-                                name="email"
-                                label="Email"
-                                rules={[{ required: true, message: 'Please enter your Email' }]}
-                            >
-                                <Input placeholder="Please enter your Email" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
@@ -120,6 +118,17 @@ const App: React.FC<MyProps> = (props) => {
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
+                                name="email"
+                                label="Email"
+                                rules={[{ required: true, message: 'Please enter your Email' }]}
+                            >
+                                <Input placeholder="Please enter your Email" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item
                                 name="phone"
                                 label="Phone Number"
                                 rules={[{ required: true, message: 'Please enter your Phone Number' }]}
@@ -128,7 +137,17 @@ const App: React.FC<MyProps> = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item
+                                name="short_intro"
+                                label="Short Introduction"
+                                rules={[{ required: false }]}
+                            >
+                                <Input placeholder="Write something about yourself" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         Update
                     </Button>
