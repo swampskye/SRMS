@@ -9,34 +9,51 @@ const Signup: React.FC = () => {
 
   const navigator = useNavigate()
 
+  // useEffect(() => {
+  //   axios.get('http://127.0.0.1:8080/user/info', {
+  //     params: { "token": cookie.load("token") }
+  //   }).then(res => {
+  //     console.log("获取userinfo", res.data)
+  //     setUser(res.data.data)
+  //   }).catch(err => {
+  //     console.log('error:', err.message);
+  //   });
+  // }, []);
+
 
   const submit = (form: any) => {
-    axios.post('base/api/user/signup/', {
-      // axios.post('http://127.0.0.1:8000/api/user/signup/', {
-      'username': form.username,
-      'staff_id': form.staff_id,
-      "phone": form.phone,
-      "email": form.email,
-      "password": form.password,
-      'r_password': form.r_password,
-      "is_admin": 'student'
-    }).then(res => {
-      console.log('res.data:', res.data);
-      console.log('res.data.code:', res.data.code)
-      if (res.data.code === 200) {
-        //跳转到登录
-        navigator('/signin')
-        console.log("stu注册成功")
-      }
-      if (res.data.code === 500) {
-        console.log('status: 500')
-      }
-      if (res.data.code === 201) {
-        console.log('status: 201')
-      }
-    }).catch(err => {
-      console.log(err.message)
-    });
+
+    console.log(form.r_password != form.password)
+    if (form.r_password != form.password) {
+      alert("The two passwords are different. Please enter your password again")
+    } else {
+      axios.post('http://localhost:8080/user/signup/', {
+        'username': form.username,
+        // 'staff_id': form.staff_id,
+        "phone": form.phone,
+        "email": form.email,
+        "password": form.password,
+        // "is_admin": 'student'
+      }).then(res => {
+        console.log('res.data:', res.data);
+        if (res.data.code === 20000) {
+          //跳转到登录
+          alert("stu注册成功")
+          navigator('/signin')
+          console.log("stu注册成功")
+        }
+        // if (res.data.code === 500) {
+        //   console.log('status: 500')
+        // }
+        // if (res.data.code === 201) {
+        //   console.log('status: 201')
+        // }
+      }).catch(err => {
+        console.log(err.message)
+      });
+    }
+
+
 
   }
 
@@ -57,13 +74,13 @@ const Signup: React.FC = () => {
             initialValues={{ remember: true }}
             onFinish={onFinish}
           >
-            <Form.Item
+            {/* <Form.Item
               name="staff_id"
               label="Staff ID"
               rules={[{ required: true, message: 'Please input your Staff ID!' }]}
             >
               <Input prefix={<IdcardOutlined />} placeholder="Staff ID" />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               name="username"
               label="Username"
