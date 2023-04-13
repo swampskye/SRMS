@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 
 
-
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
@@ -19,6 +18,11 @@ import Show from './pages/inner_pages/Show'
 import Fix from './pages/inner_pages/Fix'
 import Profile from './pages/inner_pages/Profile'
 import Table from './pages/inner_pages/Table'
+
+
+import axios from 'axios';
+axios.defaults.withCredentials = true
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

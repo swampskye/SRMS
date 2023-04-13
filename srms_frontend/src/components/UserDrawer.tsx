@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../utils/request'
 import cookie from 'react-cookies'
+// axios.defaults.withCredentials = true;
+
+import Cookie from 'js-cookie'
 
 
 const { Option } = Select;
@@ -28,19 +32,6 @@ const App: React.FC<MyProps> = (props) => {
     };
 
 
-    // useEffect(() => {
-    // axios.get('http://127.0.0.1:8000/api/user/' + props.id + '/')
-    // axios.get('http://127.0.0.1:8080/user/info')
-
-    //     .then(response => {
-    //         setUser(response.data);
-    //         console.log(response.data)
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
-    // }, []);
-
     useEffect(() => {
         axios.get('http://127.0.0.1:8080/user/info', {
             params: { "token": cookie.load("token") }
@@ -56,24 +47,11 @@ const App: React.FC<MyProps> = (props) => {
 
 
     const onFinish = (values: any) => {
-        // axios.put('http://127.0.0.1:8000/api/user/' + props.id + '/', {
-        //     'phone': values.phone,
-        //     'staff_id': values.staff_id,
-        //     'email': values.email,
-        //     'username': values.username,
-        // })
-        //     .then(response => {
-        //         setUser(response.data);
-        //         console.log(response.data)
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
         axios.put('http://127.0.0.1:8080/user/update', {
             'username': values.username,
             'phone': values.phone,
             'email': values.email,
-            'showt_intro': values.short_intro
+            'shortIntro': values.shortIntro,
         })
             .then(response => {
                 setUser(response.data);
@@ -90,11 +68,11 @@ const App: React.FC<MyProps> = (props) => {
         id: '',
         phone: '',
         email: '',
-        is_admin: null,
-        is_active: null,
+        isAdmin: null,
+        isActive: null,
         username: '',
         img: '',
-        short_intro: ''
+        shortIntro: ''
     })
 
 
@@ -153,7 +131,7 @@ const App: React.FC<MyProps> = (props) => {
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                name="short_intro"
+                                name="shortIntro"
                                 label="Short Introduction"
                                 rules={[{ required: false }]}
                             >
@@ -164,51 +142,6 @@ const App: React.FC<MyProps> = (props) => {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         Update
                     </Button>
-
-
-
-                    {/* <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item
-                                name="approver"
-                                label="Approver"
-                                rules={[{ required: true, message: 'Please choose the approver' }]}
-                            >
-                                <Select placeholder="Please choose the approver">
-                                    <Option value="jack">Jack Ma</Option>
-                                    <Option value="tom">Tom Liu</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                name="dateTime"
-                                label="DateTime"
-                                rules={[{ required: true, message: 'Please choose the dateTime' }]}
-                            >
-                                <DatePicker.RangePicker
-                                    style={{ width: '100%' }}
-                                    getPopupContainer={(trigger) => trigger.parentElement!}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={24}>
-                            <Form.Item
-                                name="description"
-                                label="Description"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'please enter url description',
-                                    },
-                                ]}
-                            >
-                                <Input.TextArea rows={4} placeholder="please enter url description" />
-                            </Form.Item>
-                        </Col>
-                    </Row> */}
                 </Form>
             </Drawer>
         </>
