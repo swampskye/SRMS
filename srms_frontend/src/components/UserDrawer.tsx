@@ -69,6 +69,19 @@ const App: React.FC<MyProps> = (props) => {
         //     .catch(error => {
         //         console.log(error);
         //     });
+        axios.put('http://127.0.0.1:8080/user/update', {
+            'username': values.username,
+            'phone': values.phone,
+            'email': values.email,
+            'showt_intro': values.short_intro
+        })
+            .then(response => {
+                setUser(response.data);
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
 

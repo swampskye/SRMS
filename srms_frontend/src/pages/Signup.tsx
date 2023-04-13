@@ -23,7 +23,6 @@ const Signup: React.FC = () => {
 
   const submit = (form: any) => {
 
-    console.log(form.r_password != form.password)
     if (form.r_password != form.password) {
       alert("The two passwords are different. Please enter your password again")
     } else {

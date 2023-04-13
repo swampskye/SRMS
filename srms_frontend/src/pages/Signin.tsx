@@ -37,15 +37,18 @@ const Signin: React.FC = () => {
 
     const submit = (form: any) => {
         axios.post('http://127.0.0.1:8080/user/signin', {
-            "username": form.staff_id,
+            "username": form.username,
             "password": form.password
         }).then(res => {
+            console.log("res.data:", res.data.data)
             console.log("new api signin data:", res.data.data.token)
             cookie.save("token", res.data.data.token, { path: "/" })
             console.log(cookie.load("token"))
+            alert("登录成功")
             navigator("/show")
             console.log("登录成功！");
         }).catch(err => {
+            alert("登录失败")
             console.log('error:', err.message);
         });
     }
@@ -67,8 +70,8 @@ const Signin: React.FC = () => {
                         onFinish={onFinish}
                     >
                         <Form.Item
-                            name="staff_id"
-                            label="Staff ID"
+                            name="username"
+                            label="Username"
                             rules={[{ required: true, message: 'Please input your Username!' }]}
                         >
                             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
