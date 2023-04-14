@@ -13,6 +13,7 @@ export default function Profile() {
     const navigator = useNavigate()
     const logout = () => {
         cookie.remove("token", { path: "/" })
+        localStorage.clear()
         navigator('/signin')
     }
 
@@ -38,7 +39,7 @@ export default function Profile() {
         }).catch(err => {
             console.log('error:', err.message);
         });
-    }, [user]);
+    }, []);
 
 
 

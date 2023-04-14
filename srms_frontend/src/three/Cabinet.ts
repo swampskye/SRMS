@@ -1,5 +1,5 @@
 // const path = "https://mock.apifox.cn/m1/1194686-0-default/cabinet/"
-const path = "http://127.0.0.1:8000/api/server/"
+const path = "http://127.0.0.1:8080/server/info"
 
 
 function getCabinetByName(name: string) {
@@ -14,3 +14,4 @@ function getCabinetByName(name: string) {
 }
 
 export { getCabinetByName }
+

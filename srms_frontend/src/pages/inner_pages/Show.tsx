@@ -3,10 +3,12 @@ import MachineRoom from "../../three/MachineRoom";
 import { getCabinetByName } from "../../three/Cabinet";
 import { useEffect, useRef, useState } from 'react';
 import { Space, Button, Card } from 'antd'
-
+import axios from '../../utils/request';
+import cookie from 'react-cookies'
 let room: any;
 
 function App() {
+
     const [state, setState] = useState({
         //信息面板的位置
         planePos: {
@@ -22,7 +24,8 @@ function App() {
             //容量
             capacity: 0,
             //服务器数量
-            count: 0
+            count: 0,
+            description: ''
         }
     });
     const [visible, setVisible] = useState('none')
@@ -37,15 +40,38 @@ function App() {
         //当鼠标划入机柜，显示信息面板
         room.onMouseOverCabinet = ({ name }: { name: string }) => {
             setVisible('block')
-            getCabinetByName(name).then((res) => {
-                let re = JSON.parse(res)
-                let temperature: number = re.temperaturn
-                let capacity: number = re.capacity
-                let count: number = re.count
-                setState((prevState) => {
-                    return Object.assign({}, prevState, { curCabinet: { name, temperature, capacity, count } })
+            // getCabinetByName(name).then((res) => {
+            //     let re = JSON.parse(res)
+            //     let description: string = re.description
+            //     // let temperature: number = re.temperaturn
+            //     // let capacity: number = re.capacity
+            //     // let count: number = re.count
+            //     setState((prevState) => {
+            //         // return Object.assign({}, prevState, { curCabinet: { name, temperature, capacity, count } })
+            //         return Object.assign({}, prevState, { curCabinet: { name, description } })
+            //     })
+            // });
+
+            axios.get('http://127.0.0.1:8080/server/info', {
+                params: { 'serverIndex': name }
+            })
+                .then(response => {
+                    console.log(response.data)
+                    // let re = JSON.parse(res)
+                    let description: string = response.data.data.descriptions
+                    // let temperature: number = re.temperaturn
+                    // let capacity: number = re.capacity
+                    // let count: number = re.count
+                    setState((prevState) => {
+                        // return Object.assign({}, prevState, { curCabinet: { name, temperature, capacity, count } })
+                        return Object.assign({}, prevState, { curCabinet: { name, description } })
+                    })
                 })
-            });
+                .catch(error => {
+                    console.log(error);
+                });
+
+
         }
         //当鼠标在机柜上移动，让信息面板随鼠标移动
         // room.onMouseMoveCabinet = (left: number, top: number) => {
@@ -78,8 +104,9 @@ function App() {
                 style={{ left: state.planePos.left, top: state.planePos.top, display: visible }}
             >
                 <p>机柜名称：{state.curCabinet.name}</p>
-                <p>机柜温度：{state.curCabinet.temperature}°</p>
-                <p>使用情况：{state.curCabinet.count}/{state.curCabinet.capacity}</p>
+                <p>机柜描述：{state.curCabinet.description}</p>
+                {/* <p>机柜温度：{state.curCabinet.temperature}°</p>
+                <p>使用情况：{state.curCabinet.count}/{state.curCabinet.capacity}</p> */}
             </div>
         </div >
     );

@@ -29,6 +29,17 @@ const Signin: React.FC = () => {
             alert("登录失败")
             console.log('error:', err.message);
         });
+
+        // axios.get('http://127.0.0.1:8080/user/info', {
+        //     params: { "token": cookie.load("token") }
+        // }).then(res => {
+        //     console.log("获取username:", res.data.data.username)
+        //     // setUser(res.data.data)
+        //     localStorage.setItem('username', res.data.data.username)
+        //     localStorage.setItem('isAdmin', res.data.data.isAdmin)
+        // }).catch(err => {
+        //     console.log('error:', err.message);
+        // });
     }
 
 

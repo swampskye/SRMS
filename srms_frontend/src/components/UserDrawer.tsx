@@ -4,9 +4,7 @@ import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from
 // import axios from 'axios';
 import axios from '../utils/request'
 import cookie from 'react-cookies'
-// axios.defaults.withCredentials = true;
 
-import Cookie from 'js-cookie'
 
 
 const { Option } = Select;

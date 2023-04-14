@@ -5,15 +5,15 @@ import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from
 const { Option } = Select;
 
 interface MyProps {
-    id: string,
-    text?: string
+    username: string,
+    text: string
 }
 
 const App: React.FC<MyProps> = (props) => {
 
 
-    // console.log(props.id)
-    // console.log(props.text)
+
+    console.log("props.username in FixDrawer", props.username)
 
     // const [text, setText] = useState(Props.text)
 
@@ -41,6 +41,7 @@ const App: React.FC<MyProps> = (props) => {
                 bodyStyle={{ paddingBottom: 80 }}
                 extra={
                     <Space>
+                        <h1>{props.username}</h1>
                         <Button onClick={onClose}>Cancel</Button>
                         <Button onClick={onClose} type="primary">
                             Submit
