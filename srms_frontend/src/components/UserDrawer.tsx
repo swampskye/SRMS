@@ -19,6 +19,17 @@ const App: React.FC<MyProps> = (props) => {
 
 
 
+    const [user, setUser] = useState({
+        id: '',
+        phone: '',
+        email: '',
+        isAdmin: null,
+        isActive: null,
+        username: '',
+        img: '',
+        shortIntro: ''
+    })
+
     const [open, setOpen] = useState(false);
 
     const showDrawer = () => {
@@ -42,8 +53,6 @@ const App: React.FC<MyProps> = (props) => {
     }, []);
 
 
-
-
     const onFinish = (values: any) => {
         axios.put('http://127.0.0.1:8080/user/update', {
             'username': values.username,
@@ -59,21 +68,6 @@ const App: React.FC<MyProps> = (props) => {
                 console.log(error);
             });
     };
-
-
-
-    const [user, setUser] = useState({
-        id: '',
-        phone: '',
-        email: '',
-        isAdmin: null,
-        isActive: null,
-        username: '',
-        img: '',
-        shortIntro: ''
-    })
-
-
 
 
     return (

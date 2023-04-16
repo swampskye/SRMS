@@ -65,18 +65,18 @@ const Main: React.FC = () => {
 
     return (
         <Layout className="layout">
-            {/* <Header style={{ position: 'sticky', backgroundColor: "#001529", top: 0, zIndex: 1, width: '100%', padding: "0" }}> */}
-            {/* <div className="logo">
+            <Header style={{ textAlign: 'center', position: 'sticky', backgroundColor: "#001529", top: 0, zIndex: 1, width: '100%', padding: "0" }}>
+                {/* <div className="logo">
                 <img src="../logo.png" alt="" style={{ margin: "auto" }} />
             </div> */}
-            <Menu
-                onClick={onClick}
-                theme="dark"
-                mode="horizontal"
-                defaultSelectedKeys={[page]}
-                items={items}
-            />
-            {/* </Header> */}
+                <Menu
+                    onClick={onClick}
+                    theme="dark"
+                    mode="horizontal"
+                    defaultSelectedKeys={[page]}
+                    items={items}
+                />
+            </Header>
             <Content style={{ backgroundColor: "white", height: "70%" }}>
                 {/* <div style={{ background: colorBgContainer, width: "100%" }}> */}
                 <Outlet />

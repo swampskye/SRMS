@@ -21,8 +21,8 @@ interface DataType {
 // const navigator = useNavigate
 
 
-let username: any = null
-let isAdmin: any = null
+let username: string
+let isAdmin: boolean
 
 
 const columns: ColumnsType<DataType> = [
@@ -31,26 +31,28 @@ const columns: ColumnsType<DataType> = [
         title: "ID",
         dataIndex: "id",
         key: "id",
-        width: 400,
+        width: 300,
         // render: (text: string) => <a>{text}</a>,
     },
     {
         title: 'Index',
         dataIndex: 'serverIndex',
         key: 'index',
-        // render: (text: string) => <a>{text}</a>,
-    },
-    {
-        title: 'Description',
-        dataIndex: 'descriptions',
-        key: 'index',
+        width: 150,
         // render: (text: string) => <a>{text}</a>,
     },
     {
         title: 'Status',
         dataIndex: 'isWorking',
         key: 'status',
+        width: 100,
         render: (isWorking: boolean) => <p>{isWorking ? '✅' : '❌'}</p>,
+    },
+    {
+        title: 'Description',
+        dataIndex: 'descriptions',
+        key: 'index',
+        // render: (text: string) => <a>{text}</a>,
     },
     {
         title: 'Created Date',
@@ -61,14 +63,16 @@ const columns: ColumnsType<DataType> = [
         title: 'Fix Info',
         dataIndex: 'fixId',
         // key: 'createdDate',
+        render: (fixId: string) => fixId == null ? "there is no isuee" : <p>{fixId} information about fix</p>
+        // render: (serverIndex: string) => isAdmin == true ? <ServerDrawer serverIndex={serverIndex} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
     },
     {
         title: 'Operations',
+        dataIndex: 'serverIndex',
         // dataIndex: 'id',
         key: 'operations',
-        // render: () => <Button type="primary">Detail</Button>
-        render: (id: string) => isAdmin == true ? <ServerDrawer id={id} text={"Edit Detail"}></ServerDrawer> : <FixDrawer username={username} text={"Issue"} ></FixDrawer>
-        // dataIndex: 'address',
+        // render: (serverIndex: string) => isAdmin ? <ServerDrawer serverIndex={serverIndex} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
+        render: (serverIndex: string) => isAdmin ? <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer> : < ServerDrawer serverIndex={serverIndex} text={"Edit Detail"} ></ServerDrawer >
     }
 ];
 
@@ -124,6 +128,7 @@ function App() {
         axios.get('http://127.0.0.1:8080/user/info', {
             params: { "token": cookie.load("token") }
         }).then(res => {
+            console.log("获取当前user:", res.data.data)
             console.log("获取username和isAdmin:", res.data.data.username, res.data.data.isAdmin)
             // setUser(res.data.data)
             username = res.data.data.username
