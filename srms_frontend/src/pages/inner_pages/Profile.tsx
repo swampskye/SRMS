@@ -65,8 +65,8 @@ export default function Profile() {
                     <Descriptions title="User Info" bordered>
                         <Descriptions.Item label="User ID" span={3}>{user.id}</Descriptions.Item>
                         <Descriptions.Item label="Username">{user.username}</Descriptions.Item>
-                        <Descriptions.Item label="Admin or Student" span={2}>
-                            {user.isAdmin === true ? <Badge status="error" text="Admin" /> : <Badge status="success" text="Studnet" />}
+                        <Descriptions.Item label="Admin or Regular User" span={2}>
+                            {user.isAdmin === true ? <Badge status="error" text="Admin" /> : <Badge status="success" text="Regular User" />}
                         </Descriptions.Item>
                         <Descriptions.Item label="Phone" span={1}>
                             {user.phone}

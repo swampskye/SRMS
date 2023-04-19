@@ -30,6 +30,10 @@ const App: React.FC<MyProps> = (props) => {
     };
 
     const sendFix = (fixId: string, serverIndex: string) => {
+        // axios.put('http://127.0.0.1:8080/server/upfixid', {
+        //     "fixId": fixId,
+        //     "serverIndex": serverIndex
+        // })
         axios.put('http://127.0.0.1:8080/server/upfixid', {
             "fixId": fixId,
             "serverIndex": serverIndex
@@ -55,7 +59,7 @@ const App: React.FC<MyProps> = (props) => {
         })
             .then(response => {
                 console.log(response.data)
-                console.log(response.data.data.id)
+                console.log('fix_id ----------- ', response.data.data.id)
                 const fixID = response.data.data.id
                 sendFix(fixID, props.serverIndex)
             })

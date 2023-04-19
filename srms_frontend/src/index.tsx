@@ -28,7 +28,6 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-// const is_authed = localStorage.getItem('token') != null
 
 const router = createBrowserRouter([
   {

@@ -5,16 +5,16 @@ export default function Fix() {
 
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/user/')
-            .then(response => {
-                setData(response.data);
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios.get('http://127.0.0.1:8080/api/user/')
+    //         .then(response => {
+    //             setData(response.data);
+    //             console.log(response.data)
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // }, []);
 
 
     return (

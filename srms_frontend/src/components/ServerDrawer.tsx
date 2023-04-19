@@ -111,7 +111,6 @@ const App: React.FC<MyProps> = (props) => {
                                 label="Description"
                                 rules={[{ required: true, message: 'description' }]}
                             >
-                                {/* <Input placeholder="description" /> */}
                                 <TextArea rows={4} />
                             </Form.Item>
                         </Col>

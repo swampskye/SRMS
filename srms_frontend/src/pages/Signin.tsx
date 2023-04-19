@@ -13,34 +13,90 @@ const Signin: React.FC = () => {
     const navigator = useNavigate()
 
 
-    const submit = (form: any) => {
+    // const submit = (form: any) => {
+    //     axios.post('http://127.0.0.1:8080/user/signin', {
+    //         "username": form.username,
+    //         "password": form.password
+    //     }).then(res => {
+    //         console.log("res.data:", res.data.data)
+    //         console.log("new api signin data:", res.data.data.token)
+    //         cookie.save("token", res.data.data.token, { path: "/" })
+    //         console.log(cookie.load("token"))
+    //         alert("登录成功")
+    //         // navigator("/show")
+    //         // navigator("/main")
+    //         // navigator("/")
+    //         navigator("/")
+    //         console.log("登录成功！");
+    //     }).catch(err => {
+    //         alert("登录失败")
+    //         console.log('error:', err.message);
+    //     });
+
+    //     axios.get('http://127.0.0.1:8080/user/info', {
+    //         params: { "token": cookie.load("token") }
+    //     }).then(res => {
+    //         console.log("获取username:", res.data.data.username)
+    //         // setUser(res.data.data)
+    //         localStorage.setItem('username', res.data.data.username)
+    //         localStorage.setItem('isAdmin', res.data.data.isAdmin)
+    //     }).catch(err => {
+    //         console.log('error:', err.message);
+    //     });
+    // }
+
+
+
+    function signin(form: any) {
         axios.post('http://127.0.0.1:8080/user/signin', {
             "username": form.username,
             "password": form.password
         }).then(res => {
+            console.log("signin function!!!!!!!!!!")
             console.log("res.data:", res.data.data)
             console.log("new api signin data:", res.data.data.token)
             cookie.save("token", res.data.data.token, { path: "/" })
             console.log(cookie.load("token"))
-            alert("登录成功")
-            navigator("/show")
+            // alert("登录成功")
+            // navigator("/show")
+            // navigator("/main")
+            // navigator("/")
             console.log("登录成功！");
+
         }).catch(err => {
             alert("登录失败")
             console.log('error:', err.message);
         });
-
-        // axios.get('http://127.0.0.1:8080/user/info', {
-        //     params: { "token": cookie.load("token") }
-        // }).then(res => {
-        //     console.log("获取username:", res.data.data.username)
-        //     // setUser(res.data.data)
-        //     localStorage.setItem('username', res.data.data.username)
-        //     localStorage.setItem('isAdmin', res.data.data.isAdmin)
-        // }).catch(err => {
-        //     console.log('error:', err.message);
-        // });
     }
+
+    function getinfo() {
+        axios.get('http://127.0.0.1:8080/user/info', {
+            params: { "token": cookie.load("token") }
+        }).then(res => {
+            console.log("getinfo function!!!!!!!!!!")
+            console.log("获取username:", res.data.data.username)
+            // setUser(res.data.data)
+            localStorage.setItem('username', res.data.data.username)
+            localStorage.setItem('isAdmin', res.data.data.isAdmin)
+            navigator("/")
+        }).catch(err => {
+            console.log('error:', err.message);
+        });
+    }
+
+    // async function submit(form: any) {
+    //     await signin(form)
+
+    //     await getinfo()
+    // }
+
+    function submit(form: any) {
+        signin(form)
+        setTimeout(() => {
+            getinfo()
+        }, 1000);
+    }
+
 
 
     const onFinish = (values: any) => {

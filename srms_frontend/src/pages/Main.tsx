@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Layout, Menu, theme, Row } from 'antd';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd';
+import axios from '../utils/request'
+import cookie from 'react-cookies'
 
 import {
     CloudServerOutlined,
@@ -28,18 +30,50 @@ function getItem(
     } as MenuItem;
 }
 
+// let username: string
+// let isAdmin: boolean
 
-const items: MenuItem[] = [
+let username: any
+let isAdmin: any
+
+const items_admin: MenuItem[] = [
     getItem(<Link to="/show">Show</Link>, 'show', <CloudServerOutlined />),
     getItem(<Link to="/table">Table</Link>, 'table', <TableOutlined />),
     getItem(<Link to="/fix">Fix</Link>, 'fix', <ToolOutlined />),
     getItem(<Link to="/profile">Profile</Link>, 'profile', <UserOutlined />),
-    // getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+];
+const items_ruser: MenuItem[] = [
+    getItem(<Link to="/show">Show</Link>, 'show', <CloudServerOutlined />),
+    getItem(<Link to="/table">Table</Link>, 'table', <TableOutlined />),
+    getItem(<Link to="/profile">Profile</Link>, 'profile', <UserOutlined />),
 ];
 
 
 
 const Main: React.FC = () => {
+
+
+    useEffect(() => {
+        getUserRole()
+    }, [])
+
+
+    async function getUserRole() {
+        axios.get('http://127.0.0.1:8080/user/info', {
+            params: { "token": cookie.load("token") }
+        }).then(res => {
+            console.log("获取当前user:", res.data.data)
+            // setUser(res.data.data)
+            // username = res.data.data.username
+            // isAdmin = res.data.data.isAdmin
+            username = localStorage.getItem('username')
+            isAdmin = localStorage.getItem('isAdmin')
+            console.log("-------------------------------------:", username, isAdmin)
+
+        }).catch(err => {
+            console.log('error:', err.message);
+        });
+    }
 
     const contentStyle: React.CSSProperties = {
         textAlign: 'center',
@@ -74,7 +108,9 @@ const Main: React.FC = () => {
                     theme="dark"
                     mode="horizontal"
                     defaultSelectedKeys={[page]}
-                    items={items}
+                    items={(isAdmin == false || isAdmin == null) ? items_ruser : items_admin}
+                // items={(isAdmin == true) ? items_admin : items_ruser}
+
                 />
             </Header>
             <Content style={{ backgroundColor: "white", height: "70%" }}>
