@@ -42,48 +42,52 @@ const columns: ColumnsType<DataType> = [
         // render: (text: string) => <a>{text}</a>,
     },
     {
-        title: 'Index',
-        dataIndex: 'serverIndex',
-        key: 'index',
+        title: 'Username',
+        dataIndex: 'username',
+        key: 'username',
         width: 150,
         // render: (text: string) => <a>{text}</a>,
     },
     {
-        title: 'Status',
-        dataIndex: 'isWorking',
-        key: 'status',
-        width: 100,
-        render: (isWorking: boolean) => <p>{isWorking ? '✅' : '❌'}</p>,
-    },
-    {
-        title: 'Description',
-        dataIndex: 'descriptions',
-        key: 'index',
+        title: 'Phone Number',
+        dataIndex: 'phone',
+        key: 'phone',
         // render: (text: string) => <a>{text}</a>,
     },
     {
-        title: 'Created Date',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+        // render: (text: string) => <a>{text}</a>,
+    },
+    // {
+    //     title: 'Created Date',
+    //     dataIndex: 'createdDate',
+    //     key: 'createdDate',
+    // },
+    {
+        title: 'Is Active?',
+        dataIndex: 'isActive',
+        key: 'isActive',
+        width: 100,
+        render: (isActive: boolean) => <p>{isActive ? '✅' : '❌'}</p>,
     },
     {
-        title: 'Fix Info',
-        dataIndex: 'fixId',
-        // key: 'createdDate',
-        render: (fixId: string) => fixId == null ? "there is no isuee" :
-            <Popover content={content} title="Title">
-                <Button type="primary" size={"small"} danger>Show Fix Info</Button>
-            </Popover>
-        // render: (serverIndex: string) => isAdmin == true ? <ServerDrawer serverIndex={serverIndex} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
+        title: 'Role',
+        dataIndex: 'isAdmin',
+        key: 'isAdmin',
+        width: 200,
+        render: (isAdmin: boolean) => <p>{isAdmin ? '👩🏻‍💻Admin🧑🏻‍💻' : '🙎🏻‍♀️Regular User🙎🏻‍♂️'}</p>,
     },
-    {
-        title: 'Operations',
-        dataIndex: 'serverIndex',
-        // dataIndex: 'id',
-        key: 'operations',
-        render: (serverIndex: string) => isAdmin ? <ServerDrawer serverIndex={serverIndex} username={username} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
-        // render: (serverIndex: string) => isAdmin ? <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer> : < ServerDrawer serverIndex={serverIndex} text={"Edit Detail"} ></ServerDrawer >
-    }
+    // {
+    //     title: 'Operations',
+    //     dataIndex: 'serverIndex',
+    //     // dataIndex: 'id',
+    //     key: 'operations',
+    //     render: (serverIndex: string) => isAdmin ? <ServerDrawer serverIndex={serverIndex} username={username} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
+    //     // render: (serverIndex: string) => isAdmin ? <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer> : < ServerDrawer serverIndex={serverIndex} text={"Edit Detail"} ></ServerDrawer >
+    // }
+
 ];
 
 
@@ -126,7 +130,7 @@ function App() {
 
 
     const getServerList = () => {
-        axios.get('http://127.0.0.1:8080/server/all')
+        axios.get('http://127.0.0.1:8080/user/all')
             .then(response => {
                 console.log(response.data)
                 setData(response.data.data);
@@ -170,15 +174,15 @@ function App() {
     return (
         <Col span={20} offset={2}>
             <Space align="center" direction='vertical'>
-                <h1 style={{ textAlign: "center" }}>Server Table</h1>
+                <h1 style={{ textAlign: "center" }}>Staff Table</h1>
                 <Table rowKey="id" columns={columns} dataSource={data} scroll={{ y: 450 }} />
             </Space>
 
-            <Space>
+            {/* <Space>
                 <Button size="small" onClick={getServerList} type='primary'>Show All</Button>
                 <Button size="small" onClick={getFailedServerList} type='primary'>Show Failed</Button>
                 <Button size="small" onClick={getIssuedServerList} type='primary'>Show Issued</Button>
-            </Space>
+            </Space> */}
         </Col >
     )
 }

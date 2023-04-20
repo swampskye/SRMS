@@ -18,6 +18,7 @@ import Show from './pages/inner_pages/Show'
 import Fix from './pages/inner_pages/Fix'
 import Profile from './pages/inner_pages/Profile'
 import Table from './pages/inner_pages/Table'
+import Staff from './pages/inner_pages/Staff'
 
 
 import axios from 'axios';
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "Fix",
         element: <Fix />
+      },
+      {
+        path: "Staff",
+        element: <Staff />
       },
       {
         path: "profile",

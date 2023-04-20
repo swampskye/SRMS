@@ -59,6 +59,7 @@ function App() {
                     console.log(response.data)
                     // let re = JSON.parse(res)
                     let description: string = response.data.data.descriptions
+                    // let description: string = JSON.parse(response.data.data.descriptions)
                     // let temperature: number = re.temperaturn
                     // let capacity: number = re.capacity
                     // let count: number = re.count
@@ -105,8 +106,6 @@ function App() {
             >
                 <p>机柜名称：{state.curCabinet.name}</p>
                 <p>机柜描述：{state.curCabinet.description}</p>
-                {/* <p>机柜温度：{state.curCabinet.temperature}°</p>
-                <p>使用情况：{state.curCabinet.count}/{state.curCabinet.capacity}</p> */}
             </div>
         </div >
     );

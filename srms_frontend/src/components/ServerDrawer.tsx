@@ -8,6 +8,7 @@ import cookie from 'react-cookies'
 interface MyProps {
     text?: string,
     serverIndex: string
+    username: String
 }
 
 const { Option } = Select;
@@ -57,9 +58,11 @@ const App: React.FC<MyProps> = (props) => {
 
     const onFinish = (values: any) => {
         axios.put('http://127.0.0.1:8080/server/update', {
-            "serverIndex": server.serverIndex,
             "isWorking": values.isWorking,
-            "descriptions": values.descriptions
+            "descriptions": values.descriptions,
+            "serverIndex": props.serverIndex,
+            "username": props.username
+            // }, params: {}
         })
             .then(response => {
                 setServer(response.data);

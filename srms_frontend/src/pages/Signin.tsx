@@ -77,8 +77,15 @@ const Signin: React.FC = () => {
             console.log("获取username:", res.data.data.username)
             // setUser(res.data.data)
             localStorage.setItem('username', res.data.data.username)
-            localStorage.setItem('isAdmin', res.data.data.isAdmin)
+            // localStorage.setItem('isAdmin', res.data.data.isAdmin)
+            localStorage.setItem('isAdmin', res.data.data.isAdmin === true ? "true" : "")
             navigator("/")
+
+            // if (!res.data.data.isAdmin) {
+            //     navigator("/")
+            // } else {
+            //     navigator("/admin")
+            // }
         }).catch(err => {
             console.log('error:', err.message);
         });

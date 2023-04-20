@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Breadcrumb, Layout, Menu, theme, Row } from 'antd';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom'
 import type { MenuProps } from 'antd';
@@ -10,7 +10,9 @@ import {
     TableOutlined,
     ToolOutlined,
     UserOutlined,
+    TeamOutlined
 } from '@ant-design/icons';
+import { type } from 'os';
 const { Header, Content, Footer } = Layout;
 
 
@@ -33,13 +35,16 @@ function getItem(
 // let username: string
 // let isAdmin: boolean
 
-let username: any
-let isAdmin: any
+// let username: any
+// let isAdmin: any
+
+
 
 const items_admin: MenuItem[] = [
     getItem(<Link to="/show">Show</Link>, 'show', <CloudServerOutlined />),
-    getItem(<Link to="/table">Table</Link>, 'table', <TableOutlined />),
+    getItem(<Link to="/table">Server</Link>, 'table', <TableOutlined />),
     getItem(<Link to="/fix">Fix</Link>, 'fix', <ToolOutlined />),
+    getItem(<Link to="/staff">Staff</Link>, 'staff', <TeamOutlined />),
     getItem(<Link to="/profile">Profile</Link>, 'profile', <UserOutlined />),
 ];
 const items_ruser: MenuItem[] = [
@@ -53,39 +58,46 @@ const items_ruser: MenuItem[] = [
 const Main: React.FC = () => {
 
 
+    const username = localStorage.getItem('username')
+    const isAdmin: boolean = Boolean(localStorage.getItem('isAdmin'))
+
     useEffect(() => {
-        getUserRole()
+        console.log('username and isAdmin:---------', username, isAdmin)
+        console.log('username and isAdmin:---------', typeof (username), username, typeof (isAdmin), isAdmin)
+
+
+        // getUserRole()
     }, [])
 
 
-    async function getUserRole() {
-        axios.get('http://127.0.0.1:8080/user/info', {
-            params: { "token": cookie.load("token") }
-        }).then(res => {
-            console.log("获取当前user:", res.data.data)
-            // setUser(res.data.data)
-            // username = res.data.data.username
-            // isAdmin = res.data.data.isAdmin
-            username = localStorage.getItem('username')
-            isAdmin = localStorage.getItem('isAdmin')
-            console.log("-------------------------------------:", username, isAdmin)
+    // async function getUserRole() {
+    //     axios.get('http://127.0.0.1:8080/user/info', {
+    //         params: { "token": cookie.load("token") }
+    //     }).then(res => {
+    //         console.log("获取当前user:", res.data.data)
+    //         // setUser(res.data.data)
+    //         // username = res.data.data.username
+    //         // isAdmin = res.data.data.isAdmin
+    //         // username = localStorage.getItem('username')
+    //         // isAdmin = localStorage.getItem('isAdmin')
+    //         console.log("-------------------------------------:", username, isAdmin)
 
-        }).catch(err => {
-            console.log('error:', err.message);
-        });
-    }
+    //     }).catch(err => {
+    //         console.log('error:', err.message);
+    //     });
+    // }
 
-    const contentStyle: React.CSSProperties = {
-        textAlign: 'center',
-        minHeight: 120,
-        lineHeight: '120px',
-        color: '#fff',
-        backgroundColor: '#108ee9',
-    };
+    // const contentStyle: React.CSSProperties = {
+    //     textAlign: 'center',
+    //     minHeight: 120,
+    //     lineHeight: '120px',
+    //     color: '#fff',
+    //     backgroundColor: '#108ee9',
+    // };
 
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
+    // const {
+    //     token: { colorBgContainer }, 
+    // } = theme.useToken();
 
     const { pathname } = useLocation(); //用useLocation中的pathname获取当前页面的url，得到的是 /xxx
     const newpathname = pathname.replace('/', '') //去掉 /
@@ -108,8 +120,7 @@ const Main: React.FC = () => {
                     theme="dark"
                     mode="horizontal"
                     defaultSelectedKeys={[page]}
-                    items={(isAdmin == false || isAdmin == null) ? items_ruser : items_admin}
-                // items={(isAdmin == true) ? items_admin : items_ruser}
+                    items={(isAdmin === true) ? items_admin : items_ruser}
 
                 />
             </Header>
