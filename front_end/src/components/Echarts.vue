@@ -1,5 +1,4 @@
 <template>
-
   <!--  main charts  -->
   <el-row class="row-bg" justify="space-evenly">
     <!--    <el-col :span="2">-->
@@ -17,7 +16,7 @@
   <!--  pie charts  -->
   <el-row>
     <el-col :span="24">
-      <div class="grid-content ep-bg-purple-dark"/>
+      <div class="grid-content ep-bg-purple-dark" />
       <div id="pie" style="width: 800px;height:800px;margin: auto"></div>
     </el-col>
   </el-row>
@@ -25,16 +24,15 @@
   <!--  calendar charts-->
   <el-row>
     <el-col :span="24">
-      <div class="grid-content ep-bg-purple-dark"/>
+      <div class="grid-content ep-bg-purple-dark" />
       <div id="calendar" style="width: 800px;height:800px;margin: auto"></div>
     </el-col>
   </el-row>
-
 </template>
 
 <script lang="ts" setup>
 import * as echarts from 'echarts';
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 
 type EChartsOption = echarts.EChartsOption;
 
@@ -52,8 +50,8 @@ onMounted(() => {
       formatter: function (a) {
         var str = 'Index:';
         return str.concat(
-            a.name + '.\n\n' + ' Server Number:',
-            a.value + '\n\n'
+          a.name + '.\n\n' + ' Server Number:',
+          a.value + '\n\n'
         );
       }
     },
@@ -161,11 +159,11 @@ onMounted(() => {
         radius: '55%',
         center: ['50%', '50%'],
         data: [
-          {value: 335, name: 'Direct'},
-          {value: 310, name: 'Email'},
-          {value: 274, name: 'Union Ads'},
-          {value: 235, name: 'Video Ads'},
-          {value: 400, name: 'Search Engine'}
+          { value: 335, name: 'Direct' },
+          { value: 310, name: 'Email' },
+          { value: 274, name: 'Union Ads' },
+          { value: 235, name: 'Video Ads' },
+          { value: 400, name: 'Search Engine' }
         ].sort(function (a, b) {
           return a.value - b.value;
         }),
@@ -409,5 +407,4 @@ onMounted(() => {
 .border {
   border: 2px solid #181818;
 }
-
 </style>

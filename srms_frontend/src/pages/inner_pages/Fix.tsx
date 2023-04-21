@@ -39,7 +39,7 @@ const columns: ColumnsType<DataType> = [
         title: "Server Index",
         dataIndex: "serverIndex",
         key: "serverIndex",
-        width: "200"
+        width: 150
     },
     {
         title: 'Issue Sender',
@@ -52,13 +52,19 @@ const columns: ColumnsType<DataType> = [
         title: 'Issue Fixer',
         dataIndex: 'fixer',
         key: 'fixer',
-        width: 100,
+        width: 150,
         // render: (isWorking: boolean) => <p>{isWorking ? '✅' : '❌'}</p>,
     },
     {
         title: 'Issue Date',
         dataIndex: 'createdDate',
         key: 'createdDate',
+        // render: (text: string) => <a>{text}</a>,
+    },
+    {
+        title: 'Fix Date',
+        dataIndex: 'fixDate',
+        key: 'fixDate',
         // render: (text: string) => <a>{text}</a>,
     },
     {
@@ -69,12 +75,6 @@ const columns: ColumnsType<DataType> = [
     {
         title: 'Fix Info',
         dataIndex: 'info',
-        // key: 'createdDate',
-        render: (info: string) => info == null ? "there is no isuee" :
-            <Popover content={content} title="Title">
-                <Button type="primary" size={"small"} danger>Show Fix Info</Button>
-            </Popover>
-        // render: (serverIndex: string) => isAdmin == true ? <ServerDrawer serverIndex={serverIndex} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
     },
 ];
 
@@ -88,34 +88,6 @@ function App() {
         getFixInfoList()
     }, []);
 
-    // const addServer = () => {
-    //     axios.post('http://127.0.0.1:8080/server/add', {
-    //         // 'description':'default'
-    //         'serverIndex': 'cabinet-001'
-    //     })
-    //         .then(response => {
-    //             // setData(response.data);
-    //             console.log('addaddaddaddaddadd' + response.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
-
-    // async function getUserRole() {
-    //     axios.get('http://127.0.0.1:8080/user/info', {
-    //         params: { "token": cookie.load("token") }
-    //     }).then(res => {
-    //         console.log("获取data:", res.data.data)
-    //         console.log("获取username和isAdmin:", res.data.data.username, res.data.data.isAdmin)
-    //         // setUser(res.data.data)
-    //         username = res.data.data.username
-    //         isAdmin = res.data.data.isAdmin
-    //     }).catch(err => {
-    //         console.log('error:', err.message);
-    //     });
-    // }
-
 
     const getFixInfoList = () => {
         axios.get('http://127.0.0.1:8080/fix/all')
@@ -127,36 +99,6 @@ function App() {
                 console.log(error);
             });
     }
-
-
-    // const getFailedServerList = () => {
-    //     axios.get('http://127.0.0.1:8080/server/failed')
-    //         .then(response => {
-    //             console.log(response.data)
-    //             setData(response.data.data);
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
-
-
-
-    // const getIssuedServerList = () => {
-    //     axios.get('http://127.0.0.1:8080/server/issued')
-    //         .then(response => {
-    //             console.log(response.data)
-    //             setData(response.data.data);
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
-
-
-
-
-
 
 
     return (

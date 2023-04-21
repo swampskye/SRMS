@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, Switch, } from 'antd';
 import axios from '../utils/request'
-import cookie from 'react-cookies'
-
+import { notification } from 'antd'
 
 interface MyProps {
     text?: string,
@@ -19,12 +18,6 @@ const App: React.FC<MyProps> = (props) => {
 
 
     const [form] = Form.useForm();
-    // console.log(props.id)
-    // console.log(props.text)
-
-    // const [text, setText] = useState(Props.text)
-
-
     const [server, setServer] = useState({
         id: '',
         isWorking: '',
@@ -66,6 +59,11 @@ const App: React.FC<MyProps> = (props) => {
         })
             .then(response => {
                 setServer(response.data);
+                onClose()
+                notification.success({
+                    description: 'Update successfully',
+                    message: 'Success',
+                });
                 console.log(response.data)
             })
             .catch(error => {
@@ -85,14 +83,6 @@ const App: React.FC<MyProps> = (props) => {
                 onClose={onClose}
                 open={open}
                 bodyStyle={{ paddingBottom: 80 }}
-            // extra={
-            //     <Space>
-            //         <Button onClick={onClose}>Cancel</Button>
-            //         <Button onClick={onClose} type="primary">
-            //             Submit
-            //         </Button>
-            //     </Space>
-            // }
             >
                 <Form layout="vertical"
                     hideRequiredMark

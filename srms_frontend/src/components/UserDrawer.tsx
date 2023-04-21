@@ -4,7 +4,8 @@ import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from
 // import axios from 'axios';
 import axios from '../utils/request'
 import cookie from 'react-cookies'
-
+import { notification } from 'antd'
+import { useNavigate } from 'react-router-dom';
 
 
 const { Option } = Select;
@@ -40,6 +41,10 @@ const App: React.FC<MyProps> = (props) => {
         setOpen(false);
     };
 
+    const navigator = useNavigate()
+
+
+
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8080/user/info', {
@@ -62,9 +67,20 @@ const App: React.FC<MyProps> = (props) => {
         })
             .then(response => {
                 setUser(response.data);
+                notification.success({
+                    description: 'Update successfully',
+                    message: 'Success',
+                });
+                onClose()
+                // navigator('/profile')
+                // navigator(-1)
                 console.log(response.data)
             })
             .catch(error => {
+                notification.error({
+                    description: 'Update Failed',
+                    message: 'Error',
+                });
                 console.log(error);
             });
     };

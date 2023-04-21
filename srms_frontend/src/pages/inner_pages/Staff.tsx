@@ -38,26 +38,29 @@ const columns: ColumnsType<DataType> = [
         title: "ID",
         dataIndex: "id",
         key: "id",
-        width: 300,
+        width: 200,
         // render: (text: string) => <a>{text}</a>,
     },
     {
         title: 'Username',
         dataIndex: 'username',
         key: 'username',
-        width: 150,
+        width: 100,
         // render: (text: string) => <a>{text}</a>,
     },
     {
         title: 'Phone Number',
         dataIndex: 'phone',
         key: 'phone',
+        width: 100,
         // render: (text: string) => <a>{text}</a>,
     },
     {
         title: 'Email',
         dataIndex: 'email',
         key: 'email',
+        width: 150,
+
         // render: (text: string) => <a>{text}</a>,
     },
     // {
@@ -65,13 +68,13 @@ const columns: ColumnsType<DataType> = [
     //     dataIndex: 'createdDate',
     //     key: 'createdDate',
     // },
-    {
-        title: 'Is Active?',
-        dataIndex: 'isActive',
-        key: 'isActive',
-        width: 100,
-        render: (isActive: boolean) => <p>{isActive ? '✅' : '❌'}</p>,
-    },
+    // {
+    //     title: 'Is Active?',
+    //     dataIndex: 'isActive',
+    //     key: 'isActive',
+    //     width: 100,
+    //     render: (isActive: boolean) => <p>{isActive ? '✅' : '❌'}</p>,
+    // },
     {
         title: 'Role',
         dataIndex: 'isAdmin',
@@ -79,14 +82,6 @@ const columns: ColumnsType<DataType> = [
         width: 200,
         render: (isAdmin: boolean) => <p>{isAdmin ? '👩🏻‍💻Admin🧑🏻‍💻' : '🙎🏻‍♀️Regular User🙎🏻‍♂️'}</p>,
     },
-    // {
-    //     title: 'Operations',
-    //     dataIndex: 'serverIndex',
-    //     // dataIndex: 'id',
-    //     key: 'operations',
-    //     render: (serverIndex: string) => isAdmin ? <ServerDrawer serverIndex={serverIndex} username={username} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
-    //     // render: (serverIndex: string) => isAdmin ? <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer> : < ServerDrawer serverIndex={serverIndex} text={"Edit Detail"} ></ServerDrawer >
-    // }
 
 ];
 
@@ -100,19 +95,7 @@ function App() {
         getServerList()
     }, []);
 
-    // const addServer = () => {
-    //     axios.post('http://127.0.0.1:8080/server/add', {
-    //         // 'description':'default'
-    //         'serverIndex': 'cabinet-001'
-    //     })
-    //         .then(response => {
-    //             // setData(response.data);
-    //             console.log('addaddaddaddaddadd' + response.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
+
 
     async function getUserRole() {
         axios.get('http://127.0.0.1:8080/user/info', {
@@ -177,12 +160,6 @@ function App() {
                 <h1 style={{ textAlign: "center" }}>Staff Table</h1>
                 <Table rowKey="id" columns={columns} dataSource={data} scroll={{ y: 450 }} />
             </Space>
-
-            {/* <Space>
-                <Button size="small" onClick={getServerList} type='primary'>Show All</Button>
-                <Button size="small" onClick={getFailedServerList} type='primary'>Show Failed</Button>
-                <Button size="small" onClick={getIssuedServerList} type='primary'>Show Issued</Button>
-            </Space> */}
         </Col >
     )
 }

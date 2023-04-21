@@ -25,7 +25,8 @@ function App() {
             capacity: 0,
             //服务器数量
             count: 0,
-            description: ''
+            description: '',
+            fixId: ''
         }
     });
     const [visible, setVisible] = useState('none')
@@ -40,32 +41,17 @@ function App() {
         //当鼠标划入机柜，显示信息面板
         room.onMouseOverCabinet = ({ name }: { name: string }) => {
             setVisible('block')
-            // getCabinetByName(name).then((res) => {
-            //     let re = JSON.parse(res)
-            //     let description: string = re.description
-            //     // let temperature: number = re.temperaturn
-            //     // let capacity: number = re.capacity
-            //     // let count: number = re.count
-            //     setState((prevState) => {
-            //         // return Object.assign({}, prevState, { curCabinet: { name, temperature, capacity, count } })
-            //         return Object.assign({}, prevState, { curCabinet: { name, description } })
-            //     })
-            // });
-
             axios.get('http://127.0.0.1:8080/server/info', {
                 params: { 'serverIndex': name }
             })
                 .then(response => {
                     console.log(response.data)
-                    // let re = JSON.parse(res)
+
                     let description: string = response.data.data.descriptions
-                    // let description: string = JSON.parse(response.data.data.descriptions)
-                    // let temperature: number = re.temperaturn
-                    // let capacity: number = re.capacity
-                    // let count: number = re.count
+                    let fixId: string = response.data.data.fixId
+
                     setState((prevState) => {
-                        // return Object.assign({}, prevState, { curCabinet: { name, temperature, capacity, count } })
-                        return Object.assign({}, prevState, { curCabinet: { name, description } })
+                        return Object.assign({}, prevState, { curCabinet: { name, description, fixId } })
                     })
                 })
                 .catch(error => {
@@ -96,16 +82,24 @@ function App() {
     function mouseMove({ clientX, clientY }: { clientX: number, clientY: number }) {
         room.selectCabinet(clientX, clientY)
     }
+
+
+
+
     return (
         // style={{ height: "300" }}
         <div className="App">
             <canvas id="canvas" ref={canvasEle} onMouseMove={mouseMove}></canvas>
+            <div id="mountNode"></div>
             <div
                 id='plane'
                 style={{ left: state.planePos.left, top: state.planePos.top, display: visible }}
             >
-                <p>机柜名称：{state.curCabinet.name}</p>
-                <p>机柜描述：{state.curCabinet.description}</p>
+                <p>Server Index:{state.curCabinet.name}</p>
+                <p>Descriptions:{state.curCabinet.description}</p>
+                <p>Issue Id:{state.curCabinet.fixId}</p>
+                <p>Status:{(state.curCabinet.fixId == null) ? '✅' : '❌'}</p>
+
             </div>
         </div >
     );

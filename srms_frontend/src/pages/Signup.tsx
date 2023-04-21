@@ -1,37 +1,45 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Col, Row, Card } from 'antd';
+import { Button, Checkbox, Form, Input, Col, Row, Card, Switch } from 'antd';
 import { IdcardOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios';
-
+// import { notify } from '../components/Notification'
+import { notification } from 'antd'
 const Signup: React.FC = () => {
 
   const navigator = useNavigate()
   const submit = (form: any) => {
-
     if (form.r_password != form.password) {
-      alert("The two passwords are different. Please enter your password again")
+      notification.error({
+        description: 'The two passwords are different. Please enter your password again',
+        message: 'Error',
+      });
     } else {
       axios.post('http://localhost:8080/user/signup/', {
         'username': form.username,
         "phone": form.phone,
         "email": form.email,
         "password": form.password,
+        "isAdmin": form.isAdmin
       }).then(res => {
         // console.log('res.data:', res.data);
         if (res.data.code === 20000) {
           //跳转到登录
-          alert("stu注册成功")
+          notification.success({
+            description: 'Signup successfully',
+            message: 'Success',
+          });
           navigator('/signin')
         }
       }).catch(err => {
+        notification.error({
+          description: 'Signup Failed',
+          message: 'Error',
+        });
         console.log(err.message)
       });
     }
-
-
-
   }
 
 
@@ -91,6 +99,12 @@ const Signup: React.FC = () => {
               <Input prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Confirm Password" />
+            </Form.Item>
+
+            <Form.Item label="Admin OR NOT"
+              name="isAdmin"
+              valuePropName="checked">
+              <Switch />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" className="login-form-button">

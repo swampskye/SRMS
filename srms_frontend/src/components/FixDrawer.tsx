@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, Switch } from 'antd';
 import axios from '../utils/request'
+import { notification } from 'antd'
+
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -12,12 +14,6 @@ interface MyProps {
 }
 
 const App: React.FC<MyProps> = (props) => {
-
-
-
-    // console.log("props.username in FixDrawer", props.username)
-
-    // const [text, setText] = useState(Props.text)
 
     const [open, setOpen] = useState(false);
 
@@ -30,19 +26,20 @@ const App: React.FC<MyProps> = (props) => {
     };
 
     const sendFix = (fixId: string, serverIndex: string) => {
-        // axios.put('http://127.0.0.1:8080/server/upfixid', {
-        //     "fixId": fixId,
-        //     "serverIndex": serverIndex
-        // })
         axios.put('http://127.0.0.1:8080/server/upfixid', {
             "fixId": fixId,
             "serverIndex": serverIndex
         })
             .then(response => {
                 console.log("addddddd fix to server details")
+
                 console.log(response.data)
             })
             .catch(error => {
+                notification.error({
+                    description: 'Issue Updated Failed',
+                    message: 'Error',
+                });
                 console.log(error);
             });
     }
@@ -62,8 +59,16 @@ const App: React.FC<MyProps> = (props) => {
                 console.log('fix_id ----------- ', response.data.data.id)
                 const fixID = response.data.data.id
                 sendFix(fixID, props.serverIndex)
+                notification.success({
+                    description: 'Issue Update successfully',
+                    message: 'Success',
+                });
             })
             .catch(error => {
+                notification.error({
+                    description: 'Issue Updated Failed',
+                    message: 'Error',
+                });
                 console.log(error);
             });
     };
@@ -79,16 +84,6 @@ const App: React.FC<MyProps> = (props) => {
                 onClose={onClose}
                 open={open}
                 bodyStyle={{ paddingBottom: 80 }}
-            // extra={
-            //     <Space>
-            //         <h1>{props.serverIndex}</h1>
-            //         <h1>{props.username}</h1>
-            //         <Button onClick={onClose}>Cancel</Button>
-            //         <Button onClick={onClose} type="primary">
-            //             Submit
-            //         </Button>
-            //     </Space>
-            // }
             >
                 <h1>{props.serverIndex}</h1>
                 <h1>{props.username}</h1>

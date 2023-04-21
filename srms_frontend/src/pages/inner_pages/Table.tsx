@@ -16,6 +16,14 @@ interface DataType {
     age: number;
     address: string;
     tags: string[];
+
+
+    id: string;
+    serverIndex: string;
+    isWorking: boolean;
+    descriptions: string;
+    createdDate: Date;
+    fixId: string;
 }
 
 // const navigator = useNavigate
@@ -81,8 +89,16 @@ const columns: ColumnsType<DataType> = [
         dataIndex: 'serverIndex',
         // dataIndex: 'id',
         key: 'operations',
-        render: (serverIndex: string) => isAdmin ? <ServerDrawer serverIndex={serverIndex} username={username} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
-        // render: (serverIndex: string) => isAdmin ? <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer> : < ServerDrawer serverIndex={serverIndex} text={"Edit Detail"} ></ServerDrawer >
+        // render: (serverIndex: string, row) => isAdmin ? <ServerDrawer serverIndex={serverIndex} username={username} text={"Edit Detail"}></ServerDrawer> : <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
+        render: (serverIndex: string, row) => {
+            if (isAdmin) {
+                return <ServerDrawer serverIndex={serverIndex} username={username} text={"Edit Detail"}></ServerDrawer>
+            } else if (row.fixId == null) {
+                return <FixDrawer serverIndex={serverIndex} username={username} text={"Issue"} ></FixDrawer>
+            } else {
+                return <span>Issue is being handled</span>
+            }
+        }
     }
 ];
 
@@ -96,19 +112,6 @@ function App() {
         getServerList()
     }, []);
 
-    // const addServer = () => {
-    //     axios.post('http://127.0.0.1:8080/server/add', {
-    //         // 'description':'default'
-    //         'serverIndex': 'cabinet-001'
-    //     })
-    //         .then(response => {
-    //             // setData(response.data);
-    //             console.log('addaddaddaddaddadd' + response.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
 
     async function getUserRole() {
         axios.get('http://127.0.0.1:8080/user/info', {
@@ -160,11 +163,6 @@ function App() {
                 console.log(error);
             });
     }
-
-
-
-
-
 
 
     return (

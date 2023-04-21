@@ -4,6 +4,9 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Col, Row, Card } from 'antd';
 import axios from 'axios';
 import cookie from 'react-cookies'
+import { notification } from 'antd';
+
+// import { notify } from '../components/Notification'
 
 const Signin: React.FC = () => {
 
@@ -11,41 +14,6 @@ const Signin: React.FC = () => {
 
 
     const navigator = useNavigate()
-
-
-    // const submit = (form: any) => {
-    //     axios.post('http://127.0.0.1:8080/user/signin', {
-    //         "username": form.username,
-    //         "password": form.password
-    //     }).then(res => {
-    //         console.log("res.data:", res.data.data)
-    //         console.log("new api signin data:", res.data.data.token)
-    //         cookie.save("token", res.data.data.token, { path: "/" })
-    //         console.log(cookie.load("token"))
-    //         alert("登录成功")
-    //         // navigator("/show")
-    //         // navigator("/main")
-    //         // navigator("/")
-    //         navigator("/")
-    //         console.log("登录成功！");
-    //     }).catch(err => {
-    //         alert("登录失败")
-    //         console.log('error:', err.message);
-    //     });
-
-    //     axios.get('http://127.0.0.1:8080/user/info', {
-    //         params: { "token": cookie.load("token") }
-    //     }).then(res => {
-    //         console.log("获取username:", res.data.data.username)
-    //         // setUser(res.data.data)
-    //         localStorage.setItem('username', res.data.data.username)
-    //         localStorage.setItem('isAdmin', res.data.data.isAdmin)
-    //     }).catch(err => {
-    //         console.log('error:', err.message);
-    //     });
-    // }
-
-
 
     function signin(form: any) {
         axios.post('http://127.0.0.1:8080/user/signin', {
@@ -57,14 +25,19 @@ const Signin: React.FC = () => {
             console.log("new api signin data:", res.data.data.token)
             cookie.save("token", res.data.data.token, { path: "/" })
             console.log(cookie.load("token"))
-            // alert("登录成功")
-            // navigator("/show")
-            // navigator("/main")
-            // navigator("/")
+
+            notification.success({
+                description: 'Signin successfully',
+                message: 'Success',
+            });
             console.log("登录成功！");
 
         }).catch(err => {
-            alert("登录失败")
+            // alert("登录失败")
+            notification.error({
+                description: 'Signin Failed',
+                message: 'Error',
+            });
             console.log('error:', err.message);
         });
     }
@@ -75,33 +48,22 @@ const Signin: React.FC = () => {
         }).then(res => {
             console.log("getinfo function!!!!!!!!!!")
             console.log("获取username:", res.data.data.username)
-            // setUser(res.data.data)
             localStorage.setItem('username', res.data.data.username)
-            // localStorage.setItem('isAdmin', res.data.data.isAdmin)
             localStorage.setItem('isAdmin', res.data.data.isAdmin === true ? "true" : "")
             navigator("/")
 
-            // if (!res.data.data.isAdmin) {
-            //     navigator("/")
-            // } else {
-            //     navigator("/admin")
-            // }
         }).catch(err => {
             console.log('error:', err.message);
         });
     }
 
-    // async function submit(form: any) {
-    //     await signin(form)
 
-    //     await getinfo()
-    // }
 
     function submit(form: any) {
         signin(form)
         setTimeout(() => {
             getinfo()
-        }, 1000);
+        }, 300);
     }
 
 
@@ -144,9 +106,9 @@ const Signin: React.FC = () => {
                                 <Checkbox>Remember me</Checkbox>
                             </Form.Item>
 
-                            <a className="login-form-forgot" href="">
+                            {/* <a className="login-form-forgot" href="">
                                 Forgot password
-                            </a>
+                            </a> */}
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="login-form-button">
